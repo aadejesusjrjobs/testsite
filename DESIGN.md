@@ -1,18 +1,18 @@
 ---
-name: Identity Core
+name: Standard Professional
 colors:
-  surface: '#fcf9f8'
-  surface-dim: '#dcd9d9'
-  surface-bright: '#fcf9f8'
+  surface: '#f7f9ff'
+  surface-dim: '#d7dae0'
+  surface-bright: '#f7f9ff'
   surface-container-lowest: '#ffffff'
-  surface-container-low: '#f6f3f2'
-  surface-container: '#f0eded'
-  surface-container-high: '#eae7e7'
-  surface-container-highest: '#e5e2e1'
-  on-surface: '#1b1b1c'
+  surface-container-low: '#f1f4fa'
+  surface-container: '#ebeef4'
+  surface-container-high: '#e5e8ee'
+  surface-container-highest: '#dfe3e8'
+  on-surface: '#181c20'
   on-surface-variant: '#424753'
-  inverse-surface: '#303030'
-  inverse-on-surface: '#f3f0ef'
+  inverse-surface: '#2d3135'
+  inverse-on-surface: '#eef1f7'
   outline: '#727785'
   outline-variant: '#c2c6d5'
   surface-tint: '#005ac1'
@@ -25,9 +25,9 @@ colors:
   on-secondary: '#ffffff'
   secondary-container: '#86f898'
   on-secondary-container: '#00722f'
-  tertiary: '#b51b15'
+  tertiary: '#765700'
   on-tertiary: '#ffffff'
-  tertiary-container: '#d9372b'
+  tertiary-container: '#956e00'
   on-tertiary-container: '#fffbff'
   error: '#ba1a1a'
   on-error: '#ffffff'
@@ -41,55 +41,64 @@ colors:
   secondary-fixed-dim: '#6ddd81'
   on-secondary-fixed: '#002108'
   on-secondary-fixed-variant: '#005320'
-  tertiary-fixed: '#ffdad5'
-  tertiary-fixed-dim: '#ffb4a9'
-  on-tertiary-fixed: '#410001'
-  on-tertiary-fixed-variant: '#930004'
-  background: '#fcf9f8'
-  on-background: '#1b1b1c'
-  surface-variant: '#e5e2e1'
+  tertiary-fixed: '#ffdea0'
+  tertiary-fixed-dim: '#fbbc06'
+  on-tertiary-fixed: '#261a00'
+  on-tertiary-fixed-variant: '#5c4300'
+  background: '#f7f9ff'
+  on-background: '#181c20'
+  surface-variant: '#dfe3e8'
 typography:
-  display-lg:
-    fontFamily: Roboto Flex
-    fontSize: 57px
-    fontWeight: '400'
-    lineHeight: 64px
-    letterSpacing: -0.25px
   headline-lg:
-    fontFamily: Roboto Flex
+    fontFamily: Inter
     fontSize: 32px
-    fontWeight: '400'
+    fontWeight: '600'
     lineHeight: 40px
+    letterSpacing: -0.02em
   headline-lg-mobile:
-    fontFamily: Roboto Flex
+    fontFamily: Inter
     fontSize: 24px
-    fontWeight: '400'
+    fontWeight: '600'
     lineHeight: 32px
-  title-lg:
-    fontFamily: Roboto Flex
-    fontSize: 22px
+    letterSpacing: -0.01em
+  headline-md:
+    fontFamily: Inter
+    fontSize: 24px
+    fontWeight: '500'
+    lineHeight: 32px
+    letterSpacing: -0.01em
+  headline-sm:
+    fontFamily: Inter
+    fontSize: 20px
     fontWeight: '500'
     lineHeight: 28px
+    letterSpacing: '0'
   body-lg:
-    fontFamily: Roboto Flex
+    fontFamily: Inter
+    fontSize: 18px
+    fontWeight: '400'
+    lineHeight: 28px
+    letterSpacing: '0'
+  body-md:
+    fontFamily: Inter
     fontSize: 16px
     fontWeight: '400'
     lineHeight: 24px
-    letterSpacing: 0.5px
-  body-md:
-    fontFamily: Roboto Flex
+    letterSpacing: '0'
+  body-sm:
+    fontFamily: Inter
     fontSize: 14px
     fontWeight: '400'
     lineHeight: 20px
-    letterSpacing: 0.25px
-  label-lg:
-    fontFamily: Roboto Flex
+    letterSpacing: '0'
+  label-md:
+    fontFamily: Inter
     fontSize: 14px
     fontWeight: '500'
     lineHeight: 20px
     letterSpacing: 0.1px
-  label-md:
-    fontFamily: Roboto Flex
+  label-sm:
+    fontFamily: Inter
     fontSize: 12px
     fontWeight: '500'
     lineHeight: 16px
@@ -108,76 +117,84 @@ spacing:
   md: 16px
   lg: 24px
   xl: 32px
-  container-max: 448px
-  gutter: 16px
+  2xl: 48px
+  3xl: 64px
+  container-max: 1280px
+  gutter: 24px
+  margin-mobile: 16px
+  margin-desktop: 32px
 ---
 
 ## Brand & Style
 
-The design system focuses on a high-trust, frictionless authentication experience. It prioritizes clarity and security through a **Corporate/Modern** aesthetic grounded in Material Design 3 (MD3) principles. The target audience is global and diverse, requiring an interface that feels both institutional and welcoming.
+This design system is built upon the principles of clarity, efficiency, and trust. It targets professional environments where information density must be balanced with legibility. The aesthetic follows a **Modern Corporate** approach, characterized by vast white space, a disciplined color palette, and a focus on functional utility over decorative flair. 
 
-The style utilizes a "Surface-First" approach: large, expansive white spaces allow the high-quality typography to drive the hierarchy. Interaction points are marked by soft, meaningful transitions and generous touch targets. The emotional response should be one of calm, reliability, and effortless progression.
+The emotional response should be one of "effortless productivity." By utilizing a restrained visual language, the interface recedes into the background, allowing the user's data and tasks to take center stage. High-quality sans-serif typography and purposeful alignment create a sense of systematic order and reliability.
 
 ## Colors
 
-The palette is anchored by a sophisticated range of neutral grays to maintain a professional backdrop. Google's brand colors are used strategically as functional accents rather than decorative elements:
+The palette is rooted in a high-contrast foundation to ensure maximum accessibility and a "clean" feel. 
 
-- **Primary (Blue):** Used for primary actions, active states, and focus indicators.
-- **Success (Green):** Used for completion states and positive feedback.
-- **Error (Red):** Used for critical alerts and destructive actions.
-- **Warning (Yellow):** Used for cautionary states.
-- **Neutral:** A spectrum from `#1F1F1F` (Text) to `#F0F2F2` (Background fills) ensures high legibility and soft contrast.
+- **Primary Blue (#4285F4):** Used for primary actions, active states, and key wayfinding elements.
+- **Surface & Background:** The application primarily uses a pure white background to maximize "breathability." A light gray surface color is used for secondary containers, sidebars, and subtle grouping.
+- **Functional Colors:** Success (Green), Warning (Yellow), and Error (Red) follow standard semantic conventions to ensure intuitive status communication.
+- **Neutrals:** A scale of grays is used for text hierarchy, borders, and icons, ensuring that the primary blue remains the dominant focal point.
 
 ## Typography
 
-This design system utilizes **Roboto Flex** for its exceptional versatility and readability across all weights. The typographic scale follows a strict hierarchy to guide users through the authentication flow:
+This design system utilizes **Inter** for all roles to achieve a systematic, utilitarian look that remains highly readable at small sizes. 
 
-- **Headlines:** Set in `Regular` weight to maintain a clean, modern look without feeling aggressive.
-- **Body Text:** Optimized for long-form reading and instructions with ample line height.
-- **Labels:** Set in `Medium` weight to provide clear distinction for buttons and form headers.
-- **Scaling:** On mobile devices, large headlines scale down to prevent excessive line-breaking, ensuring the "Login Box" remains centered and visible.
+Typography is organized into a clear hierarchy:
+- **Headlines:** Use tighter letter spacing and heavier weights to provide strong visual anchors.
+- **Body:** Standardized at 16px for optimal long-form reading, switching to 14px for dense data views.
+- **Labels:** Used for buttons, form headers, and navigation items, utilizing medium weights to differentiate from body text.
+
+On mobile devices, the `headline-lg` scales down to 24px to prevent excessive line wrapping while maintaining its relative importance.
 
 ## Layout & Spacing
 
-The layout utilizes a **Fixed Grid** approach for the central authentication module. 
+The layout is built on a **12-column fluid grid** for desktop, transitioning to a **4-column grid** for mobile. We employ a strict 8px spatial rhythm to ensure consistency across all components.
 
-- **Desktop:** The login card is centered both horizontally and vertically, with a fixed width of `448px`.
-- **Mobile:** The layout becomes fluid, with `24px` horizontal margins.
-- **Spacing Rhythm:** An 8px linear scale is used for all spatial relationships. Elements within the card (like an email input and "Next" button) are separated by `xl` (32px) blocks to minimize cognitive load.
-- **Safe Areas:** A minimum of `48px` padding is maintained at the top of the viewport for brand placement (Logo).
+- **Desktop (1024px+):** Fixed maximum container width of 1280px, centered with 32px side margins. Gutters are fixed at 24px.
+- **Tablet (768px - 1023px):** Fluid width with 24px side margins.
+- **Mobile (0px - 767px):** Fluid width with 16px side margins.
+
+Spacing between major sections should use `2xl` (48px) or `3xl` (64px) to reinforce the "Google-inspired" sense of openness. Vertical rhythm within cards and components should primarily use `md` (16px).
 
 ## Elevation & Depth
 
-In accordance with MD3, depth is communicated through **Tonal Layers** and subtle **Ambient Shadows**. 
+This design system uses a **Tonal Layering** approach combined with **Ambient Shadows** to indicate elevation. 
 
-- **Level 0 (Background):** Pure white or ultra-light gray (#F8F9FA).
-- **Level 1 (Card):** The primary login container uses a very soft, diffused shadow (Blur: 10px, Y: 2px, Opacity: 8%) or a low-contrast outline (#E0E0E0) depending on the context.
-- **Interaction:** Buttons utilize a slight elevation increase on hover to provide tactile feedback. High-priority components (like the account picker) use tonal overlays—a 5-8% primary color tint—to signify elevation without heavy shadows.
+- **Level 0 (Background):** Pure white (#FFFFFF).
+- **Level 1 (Surface):** Light gray (#F8F9FA). Used for sidebars or secondary content areas.
+- **Level 2 (Cards/Menus):** White surfaces with a very soft, diffused shadow: `0 1px 3px rgba(60, 64, 67, 0.3), 0 4px 8px rgba(60, 64, 67, 0.15)`.
+- **Level 3 (Modals/Overlays):** White surfaces with deeper shadows and a semi-transparent dark overlay for the background to focus user attention.
+
+Avoid heavy borders; instead, use subtle 1px outlines in `#DADCE0` for structural definition when tonal separation is insufficient.
 
 ## Shapes
 
-The design system adopts a **Rounded** shape language to evoke friendliness and modernism. 
+The shape language is modern and approachable. We use **Rounded** corners (8px base) to soften the professional aesthetic and make the UI feel more accessible.
 
-- **Main Containers:** The primary login card uses `rounded-xl` (24px) to create a distinct, soft frame.
-- **Input Fields:** Text fields use `rounded-sm` (4px) or `rounded-md` (8px) to maintain a sense of structure and alignment.
-- **Buttons:** Primary action buttons are fully rounded (Pill-shaped) to maximize their visual distinction and signify clickability.
+- **Standard Elements:** Buttons, inputs, and cards use an 8px (`0.5rem`) corner radius.
+- **Large Elements:** Modals and large containers use a 16px (`1rem`) corner radius.
+- **Contextual Elements:** Small tags or badges may use a "Pill" shape (full rounding) to distinguish them from interactive buttons.
 
 ## Components
 
 ### Buttons
-- **Primary:** Pill-shaped, solid Primary Blue background, white text. No shadow in rest state; subtle elevation on hover.
-- **Secondary/Text:** No background or border. Primary Blue text. Used for "Create account" or "Forgot email."
+- **Primary:** Solid `#4285F4` background with white text. 8px rounded corners.
+- **Secondary:** Outlined with a 1px `#DADCE0` border and `#4285F4` text.
+- **Tertiary/Ghost:** No background or border; `#5F6368` text that shifts to `#202124` on hover.
 
 ### Input Fields
-- **Outlined Style:** A 1px border (#747775) that thickens to 2px Primary Blue on focus.
-- **Floating Labels:** Labels transition from inside the field to the top border on focus, following the MD3 spec.
+Inputs should have a 1px border in `#DADCE0`, 8px roundedness, and `body-md` typography. On focus, the border transitions to 2px `#4285F4`. Labels should use `label-md` and sit clearly above the field.
 
 ### Cards
-- **Authentication Card:** The central vessel. White background, 24px corner radius, and 40px internal padding for desktop.
+Cards are the primary container for grouping information. They use a white background, the Level 2 shadow profile, and 8px padding (`md`).
 
-### Account Picker
-- **List Items:** 56px height minimum. Features a circular avatar (40px) on the left and a 1px divider between items.
-- **Hover State:** A subtle gray (#F1F3F4) background fill with a 4px corner radius.
+### Lists
+List items should have a minimum height of 48px for touch targets. Use a subtle `#F8F9FA` background hover state. Dividers between items should be 1px wide and `#F1F3F4`.
 
-### Progress Indicators
-- **Linear Progress:** A 4px thick bar at the very top of the login card, appearing only during transition/loading states using the Primary Blue.
+### Chips & Badges
+Chips use a light gray background (`#E8EAED`) and 16px (`rounded-xl`) height. Badges for status (e.g., "Error") use a light tint of the status color with high-contrast text.

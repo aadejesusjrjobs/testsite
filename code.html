@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AccountSync - Seamless Account Detection</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface-variant": "#424753",
+                        "primary-container": "#2771df",
+                        "on-primary-fixed": "#001a41",
+                        "on-background": "#181c20",
+                        "on-secondary": "#ffffff",
+                        "tertiary-container": "#956e00",
+                        "on-secondary-fixed-variant": "#005320",
+                        "background": "#f7f9ff",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed-variant": "#004494",
+                        "on-tertiary": "#ffffff",
+                        "surface": "#f7f9ff",
+                        "primary": "#0058bd",
+                        "on-secondary-fixed": "#002108",
+                        "surface-container-highest": "#dfe3e8",
+                        "on-primary-container": "#fefcff",
+                        "tertiary-fixed-dim": "#fbbc06",
+                        "on-tertiary-container": "#fffbff",
+                        "surface-container": "#ebeef4",
+                        "outline": "#727785",
+                        "outline-variant": "#c2c6d5",
+                        "primary-fixed-dim": "#adc6ff",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed": "#89fa9b",
+                        "primary-fixed": "#d8e2ff",
+                        "secondary": "#006e2c",
+                        "on-error-container": "#93000a",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#00722f",
+                        "inverse-surface": "#2d3135",
+                        "surface-bright": "#f7f9ff",
+                        "tertiary": "#765700",
+                        "tertiary-fixed": "#ffdea0",
+                        "secondary-container": "#86f898",
+                        "surface-tint": "#005ac1",
+                        "on-tertiary-fixed-variant": "#5c4300",
+                        "secondary-fixed-dim": "#6ddd81",
+                        "inverse-primary": "#adc6ff",
+                        "on-error": "#ffffff",
+                        "on-surface": "#181c20",
+                        "inverse-on-surface": "#eef1f7",
+                        "on-tertiary-fixed": "#261a00",
+                        "surface-variant": "#dfe3e8",
+                        "surface-container-low": "#f1f4fa",
+                        "surface-dim": "#d7dae0",
+                        "surface-container-high": "#e5e8ee",
+                        "surface-container-lowest": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "container-max": "1280px",
+                        "md": "16px",
+                        "margin-desktop": "32px",
+                        "lg": "24px",
+                        "3xl": "64px",
+                        "gutter": "24px",
+                        "xs": "4px",
+                        "sm": "8px",
+                        "2xl": "48px",
+                        "xl": "32px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-md": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .card-shadow {
+            box-shadow: 0 1px 3px rgba(60, 64, 67, 0.3), 0 4px 8px rgba(60, 64, 67, 0.15);
+        }
+        .glass-effect {
+            backdrop-filter: blur(8px);
+            background: rgba(255, 255, 255, 0.8);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- TopNavBar Component -->
+<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center h-16 px-margin-mobile md:px-margin-desktop bg-surface/80 backdrop-blur-md shadow-sm transition-all duration-200">
+<div class="flex items-center gap-xl">
+<span class="font-headline-sm text-headline-sm font-bold text-primary">AccountSync</span>
+<div class="hidden md:flex gap-lg">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="#">Features</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="#">Security</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="#">Privacy</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="#">Support</a>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="hidden md:block px-lg py-sm font-label-md text-label-md text-primary hover:bg-surface-container-low transition-colors rounded-lg cursor-pointer active:scale-95">Sign In</button>
+<button class="px-lg py-sm font-label-md text-label-md bg-primary text-on-primary hover:bg-primary-container transition-all rounded-lg cursor-pointer active:scale-95 shadow-sm">Get Started</button>
+</div>
+</nav>
+<main class="pt-32 pb-3xl">
+<!-- Hero Section -->
+<section class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop text-center mb-3xl">
+<h1 class="font-headline-lg text-headline-lg md:text-5xl font-extrabold text-on-surface tracking-tight mb-md">
+                Seamless Account Detection
+            </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto mb-2xl">
+                Experience the future of effortless login with Google One Tap integration. Connect your ecosystem in seconds.
+            </p>
+<!-- Main Feature: Account Status Card (Bento-style layout) -->
+<div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-lg items-center">
+<!-- Status Card Container -->
+<div class="md:col-span-12 lg:col-span-8 bg-surface-container-lowest border border-outline-variant rounded-xl p-xl card-shadow relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-full h-1 bg-primary"></div>
+<div class="flex flex-col items-center justify-center min-h-[320px] py-xl" id="auth-canvas">
+<!-- Initial State (Checking) -->
+<div class="flex flex-col items-center" id="state-checking">
+<div class="animate-spin rounded-full h-12 w-12 border-4 border-primary/20 border-t-primary mb-md"></div>
+<p class="font-label-md text-label-md text-on-surface-variant">Checking account status...</p>
+</div>
+<!-- Not Detected State -->
+<div class="hidden flex flex-col items-center" id="state-not-detected">
+<div class="mb-xl text-primary">
+<span class="material-symbols-outlined text-6xl">account_circle</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm mb-sm">No Account Detected</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-xl text-center max-w-xs">
+                                Sign in to sync your preferences across all your devices instantly.
+                            </p>
+<button class="flex items-center gap-md px-xl py-md bg-white border border-outline-variant rounded-lg font-label-md text-label-md text-on-surface hover:bg-surface-container-low transition-all card-shadow active:scale-95" onclick="simulateLogin()">
+<svg class="w-5 h-5" viewbox="0 0 24 24">
+<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"></path>
+<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path>
+</svg>
+                                Sign in with Google
+                            </button>
+</div>
+<!-- Logged In State -->
+<div class="hidden flex flex-col items-center" id="state-logged-in">
+<div class="relative mb-xl">
+<div class="w-24 h-24 rounded-full overflow-hidden border-4 border-secondary-container p-1">
+<img class="w-full h-full object-cover rounded-full" data-alt="A professional, friendly headshot of a diverse young tech professional with a clean, soft-focus background, styled for a modern SaaS user profile. Soft natural lighting, corporate minimalist aesthetic, with subtle blue and white tones to match AccountSync's brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmhgbGp4fyAjM4gf5Zey20xgMGvxF4XrBPk4AxlfWX97InZLVaszKDM1mU414oT10xyBVxIKMOkpF-dMTFHDaSvO4VwNKWzkl_Wr6YKcEVf4dsGow3a45jd0QsBe3z9TSi_Jpf8Ch2lhb_aVg-pCitBzYIPYXVhW9AjH2IsHl76zk6zf-8vYbACMTLogxrdJY0rcPJYarMGVvYkYOAspA5-ALI0WVX39eeqCjH8EngN4UdUevdd0BjTNNeOKKnVWcNey9litAdM7Y"/>
+</div>
+<div class="absolute bottom-0 right-0 bg-secondary text-on-secondary rounded-full p-1 border-2 border-white">
+<span class="material-symbols-outlined text-sm">check</span>
+</div>
+</div>
+<h3 class="font-headline-sm text-headline-sm mb-sm text-center">Welcome back, Alex</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-xl">alex.sync@example.com</p>
+<div class="flex gap-md">
+<button class="px-xl py-md bg-primary text-on-primary font-label-md text-label-md rounded-lg hover:bg-primary-container transition-all active:scale-95 shadow-sm">
+                                    Access Dashboard
+                                </button>
+<button class="px-xl py-md border border-outline-variant font-label-md text-label-md rounded-lg hover:bg-surface-container-low transition-all active:scale-95" onclick="simulateLogout()">
+                                    Sign Out
+                                </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Secondary Bento Column -->
+<div class="hidden lg:flex flex-col gap-lg lg:col-span-4">
+<div class="bg-primary-fixed text-on-primary-fixed p-lg rounded-xl flex flex-col justify-between h-40">
+<span class="material-symbols-outlined text-3xl">bolt</span>
+<div>
+<p class="font-label-md text-label-md opacity-80">Integration Speed</p>
+<p class="font-headline-sm text-headline-sm font-bold">0.4s Detection</p>
+</div>
+</div>
+<div class="bg-tertiary-fixed text-on-tertiary-fixed p-lg rounded-xl flex flex-col justify-between h-40">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">security</span>
+<div>
+<p class="font-label-md text-label-md opacity-80">Security Protocol</p>
+<p class="font-headline-sm text-headline-sm font-bold">SHA-256 Auth</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- How it Works Section -->
+<section class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-3xl border-t border-outline-variant">
+<h2 class="font-headline-md text-headline-md text-center mb-2xl">How it Works</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-xl">
+<!-- Step 1 -->
+<div class="flex flex-col items-center text-center p-lg rounded-xl hover:bg-surface-container-low transition-colors group">
+<div class="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-lg group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-3xl">privacy_tip</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm mb-sm">1. Secure Detection</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                        Our intelligent system scans for active sessions securely without compromising your personal data.
+                    </p>
+</div>
+<!-- Step 2 -->
+<div class="flex flex-col items-center text-center p-lg rounded-xl hover:bg-surface-container-low transition-colors group">
+<div class="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-lg group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-3xl">touch_app</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm mb-sm">2. One-Tap Login</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                        Say goodbye to passwords. A single tap confirms your identity and grants immediate access.
+                    </p>
+</div>
+<!-- Step 3 -->
+<div class="flex flex-col items-center text-center p-lg rounded-xl hover:bg-surface-container-low transition-colors group">
+<div class="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-lg group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-3xl">sync_alt</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm mb-sm">3. Instant Sync</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                        Your profile, preferences, and data are instantly synchronized across all your active platforms.
+                    </p>
+</div>
+</div>
+</section>
+<!-- Mock One Tap Prompt (Bottom Right) -->
+<div class="fixed bottom-lg right-lg w-full max-w-sm glass-effect rounded-xl shadow-2xl p-md border border-outline-variant z-50 transition-all duration-500 translate-y-full opacity-0" id="one-tap-prompt">
+<div class="flex justify-between items-start mb-md">
+<div class="flex items-center gap-sm">
+<svg class="w-5 h-5" viewbox="0 0 24 24">
+<path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+<path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+<path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"></path>
+<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path>
+</svg>
+<span class="font-label-md text-label-md text-on-surface">Sign in to AccountSync</span>
+</div>
+<button class="text-on-surface-variant hover:text-on-surface" onclick="hideOneTap()">
+<span class="material-symbols-outlined text-sm">close</span>
+</button>
+</div>
+<div class="flex items-center gap-md mb-lg p-sm rounded-lg hover:bg-surface-container-low cursor-pointer transition-colors" onclick="simulateLogin()">
+<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A small, circular avatar of a professional looking individual, warm and approachable, intended for a login UI element. High resolution with clean studio lighting, predominantly using a palette of blues and whites to match a corporate identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzC3BggwmeWCgHTqTvqKPg7FqNIvWpsAXdGEsm-8RvdiY8osQxJua05hsoY16j73gYNSc32D2wx6Y5mn0Qmq6bzhvQivKY-Cph_QZLUSPSf4C65oHOMxcolhmffG-MBG2re8y19MAL_CYnbvmIbA7nRbWsjDJRImR7NEmK9rC_zrxY1uBoXeaZxQLVVz804on1iHOREDkQBGwFBJ7MN-vQWHuE2nqFK0TdDJIpcP-LDcwNNEXlM07He4DT__CUoxAYIWjEUDduu04"/>
+</div>
+<div class="flex-1">
+<p class="font-label-md text-label-md text-on-surface font-semibold">Alex Sync</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">alex.sync@example.com</p>
+</div>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant px-sm">
+                To continue, Google will share your name, email address, and profile picture with AccountSync.
+            </p>
+</div>
+</main>
+<!-- Footer Component -->
+<footer class="w-full py-xl px-margin-mobile md:px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-md border-t border-outline-variant bg-surface-container-lowest">
+<div class="flex flex-col items-center md:items-start gap-xs">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">AccountSync</span>
+<p class="font-label-md text-label-md text-on-surface-variant">© 2024 AccountSync. All rights reserved.</p>
+</div>
+<div class="flex gap-lg">
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Cookie Policy</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Contact Us</a>
+</div>
+</footer>
+<script>
+        // Authentication Simulation Logic
+        const stateChecking = document.getElementById('state-checking');
+        const stateNotDetected = document.getElementById('state-not-detected');
+        const stateLoggedIn = document.getElementById('state-logged-in');
+        const oneTapPrompt = document.getElementById('one-tap-prompt');
+
+        function setAuthState(state) {
+            stateChecking.classList.add('hidden');
+            stateNotDetected.classList.add('hidden');
+            stateLoggedIn.classList.add('hidden');
+
+            if (state === 'checking') stateChecking.classList.remove('hidden');
+            if (state === 'not-detected') {
+                stateNotDetected.classList.remove('hidden');
+                showOneTap();
+            }
+            if (state === 'logged-in') stateLoggedIn.classList.remove('hidden');
+        }
+
+        function showOneTap() {
+            setTimeout(() => {
+                oneTapPrompt.classList.remove('translate-y-full', 'opacity-0');
+            }, 1000);
+        }
+
+        function hideOneTap() {
+            oneTapPrompt.classList.add('translate-y-full', 'opacity-0');
+        }
+
+        function simulateLogin() {
+            hideOneTap();
+            setAuthState('checking');
+            setTimeout(() => {
+                setAuthState('logged-in');
+            }, 1200);
+        }
+
+        function simulateLogout() {
+            setAuthState('checking');
+            setTimeout(() => {
+                setAuthState('not-detected');
+            }, 1000);
+        }
+
+        // Initialize
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                setAuthState('not-detected');
+            }, 1500);
+        });
+
+        // Micro-interaction for scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 20) {
+                nav.classList.add('shadow-md');
+            } else {
+                nav.classList.remove('shadow-md');
+            }
+        });
+    </script>
+</body></html>
