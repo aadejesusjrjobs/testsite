@@ -1,343 +1,221 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="en"><head>
+<html class="light" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Zenith AI | Precision Productivity</title>
+<title>Sign in - Google Accounts</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Geist:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-container": "#00722f",
+                    "error": "#ba1a1a",
+                    "on-surface": "#1b1b1c",
+                    "on-secondary-fixed-variant": "#005320",
+                    "tertiary": "#b51b15",
+                    "primary": "#0058bd",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-container": "#2771df",
+                    "on-primary": "#ffffff",
+                    "surface-tint": "#005ac1",
+                    "secondary-fixed": "#89fa9b",
+                    "surface-container-low": "#f6f3f2",
+                    "inverse-primary": "#adc6ff",
+                    "surface-variant": "#e5e2e1",
+                    "background": "#fcf9f8",
+                    "tertiary-container": "#d9372b",
+                    "on-tertiary-fixed": "#410001",
+                    "inverse-surface": "#303030",
+                    "tertiary-fixed-dim": "#ffb4a9",
+                    "on-secondary-fixed": "#002108",
+                    "secondary-container": "#86f898",
+                    "on-tertiary-container": "#fffbff",
+                    "surface-container-high": "#eae7e7",
+                    "surface-bright": "#fcf9f8",
+                    "on-primary-fixed": "#001a41",
+                    "outline-variant": "#c2c6d5",
+                    "surface-container": "#f0eded",
+                    "surface": "#fcf9f8",
+                    "on-error": "#ffffff",
+                    "on-primary-fixed-variant": "#004494",
+                    "primary-fixed-dim": "#adc6ff",
+                    "on-error-container": "#93000a",
+                    "outline": "#727785",
+                    "surface-container-highest": "#e5e2e1",
+                    "on-tertiary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "primary-fixed": "#d8e2ff",
+                    "secondary": "#006e2c",
+                    "on-primary-container": "#fefcff",
+                    "tertiary-fixed": "#ffdad5",
+                    "on-background": "#1b1b1c",
+                    "secondary-fixed-dim": "#6ddd81",
+                    "on-surface-variant": "#424753",
+                    "surface-dim": "#dcd9d9",
+                    "on-tertiary-fixed-variant": "#930004",
+                    "on-secondary": "#ffffff",
+                    "inverse-on-surface": "#f3f0ef"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sm": "8px",
+                    "lg": "24px",
+                    "container-max": "448px",
+                    "md": "16px",
+                    "base": "4px",
+                    "xs": "4px",
+                    "xl": "32px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "display-lg": ["Roboto Flex"],
+                    "headline-lg": ["Roboto Flex"],
+                    "label-md": ["Roboto Flex"],
+                    "title-lg": ["Roboto Flex"],
+                    "body-lg": ["Roboto Flex"],
+                    "headline-lg-mobile": ["Roboto Flex"],
+                    "label-lg": ["Roboto Flex"],
+                    "body-md": ["Roboto Flex"]
+            },
+            "fontSize": {
+                    "display-lg": ["57px", {"lineHeight": "64px", "letterSpacing": "-0.25px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "400"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "500"}],
+                    "title-lg": ["22px", {"lineHeight": "28px", "fontWeight": "500"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "letterSpacing": "0.5px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "400"}],
+                    "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "500"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.25px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
 <style>
         body {
-            background-color: #13131b;
-            color: #e4e1ed;
+            font-family: 'Roboto Flex', sans-serif;
             -webkit-font-smoothing: antialiased;
         }
-        .glass-card {
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(30, 41, 59, 0.5);
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
-        .ai-shimmer {
-            position: relative;
-            overflow: hidden;
+        /* Custom floating label logic */
+        .input-group input:focus ~ label,
+        .input-group input:not(:placeholder-shown) ~ label {
+            transform: translateY(-24px) scale(0.85);
+            background-color: white;
+            padding: 0 4px;
+            color: #0058bd;
         }
-        .ai-shimmer::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(
-                45deg,
-                transparent,
-                rgba(192, 193, 255, 0.03),
-                transparent
-            );
-            transform: rotate(45deg);
-            animation: shimmer 6s infinite linear;
-        }
-        @keyframes shimmer {
-            0% { transform: translateX(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) rotate(45deg); }
+        .input-group input:focus {
+            border-width: 2px;
+            border-color: #0058bd;
         }
     </style>
-<script id="tailwind-config">
-        tailwind.config = {
-          darkMode: "class",
-          theme: {
-            extend: {
-              "colors": {
-                      "surface": "#13131b",
-                      "on-background": "#e4e1ed",
-                      "surface-tint": "#c0c1ff",
-                      "surface-container-low": "#1b1b23",
-                      "on-tertiary-fixed": "#0b1c30",
-                      "error": "#ffb4ab",
-                      "on-primary": "#1000a9",
-                      "on-secondary": "#283044",
-                      "on-secondary-container": "#adb4ce",
-                      "primary": "#c0c1ff",
-                      "tertiary-container": "#68788f",
-                      "on-secondary-fixed": "#131b2e",
-                      "surface-dim": "#13131b",
-                      "on-error": "#690005",
-                      "outline": "#908fa0",
-                      "background": "#13131b",
-                      "error-container": "#93000a",
-                      "tertiary": "#b7c8e1",
-                      "secondary-container": "#3f465c",
-                      "on-tertiary-fixed-variant": "#38485d",
-                      "on-tertiary-container": "#000510",
-                      "outline-variant": "#464554",
-                      "on-error-container": "#ffdad6",
-                      "primary-fixed-dim": "#c0c1ff",
-                      "inverse-surface": "#e4e1ed",
-                      "primary-container": "#8083ff",
-                      "surface-container-lowest": "#0d0d15",
-                      "secondary-fixed-dim": "#bec6e0",
-                      "on-surface-variant": "#c7c4d7",
-                      "surface-container-highest": "#34343d",
-                      "inverse-on-surface": "#303038",
-                      "on-primary-fixed": "#07006c",
-                      "inverse-primary": "#494bd6",
-                      "surface-container-high": "#292932",
-                      "tertiary-fixed": "#d3e4fe",
-                      "secondary": "#bec6e0",
-                      "primary-fixed": "#e1e0ff",
-                      "on-secondary-fixed-variant": "#3f465c",
-                      "on-primary-fixed-variant": "#2f2ebe",
-                      "tertiary-fixed-dim": "#b7c8e1",
-                      "on-primary-container": "#0d0096",
-                      "on-tertiary": "#213145",
-                      "surface-bright": "#393841",
-                      "on-surface": "#e4e1ed",
-                      "surface-container": "#1f1f27",
-                      "secondary-fixed": "#dae2fd",
-                      "surface-variant": "#34343d"
-              },
-              "borderRadius": {
-                      "DEFAULT": "0.125rem",
-                      "lg": "0.25rem",
-                      "xl": "0.5rem",
-                      "full": "0.75rem"
-              },
-              "spacing": {
-                      "2xl": "64px",
-                      "lg": "24px",
-                      "margin": "32px",
-                      "xl": "40px",
-                      "gutter": "24px",
-                      "xs": "4px",
-                      "sm": "8px",
-                      "unit": "4px",
-                      "md": "16px"
-              },
-              "fontFamily": {
-                      "body-md": ["Inter"],
-                      "headline-lg": ["Inter"],
-                      "label-md": ["Geist"],
-                      "body-lg": ["Inter"],
-                      "headline-md": ["Inter"],
-                      "code-sm": ["Geist"],
-                      "display": ["Inter"]
-              },
-              "fontSize": {
-                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
-                      "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "500"}],
-                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
-                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
-                      "code-sm": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
-                      "display": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
-              }
-            },
-          },
-        }
-    </script>
 </head>
-<body class="bg-surface text-on-background font-body-md overflow-x-hidden">
-<!-- Top Navigation Bar -->
-<nav class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md border-b border-outline-variant/20">
-<div class="flex justify-between items-center w-full px-margin py-md max-w-[1440px] mx-auto">
-<div class="text-headline-md font-headline-md font-bold text-primary">Zenith</div>
-<div class="hidden md:flex items-center gap-xl">
-<a class="text-primary font-bold border-b-2 border-primary pb-1 font-label-md text-label-md" href="#">Features</a>
-<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md" href="#">How it Works</a>
-<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md" href="#">Testimonials</a>
-<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md" href="#">Pricing</a>
+<body class="bg-surface selection:bg-primary-fixed selection:text-on-primary-fixed min-h-screen flex flex-col items-center justify-center p-md">
+<!-- Main Authentication Container -->
+<main class="w-full max-w-[448px] bg-white rounded-[24px] border border-outline-variant p-xl md:p-xl flex flex-col items-center shadow-[0_2px_10px_rgba(0,0,0,0.08)] relative overflow-hidden">
+<!-- Linear Progress Indicator (Hidden by default, shown during transitions) -->
+<div class="absolute top-0 left-0 w-full h-[4px] bg-primary-fixed overflow-hidden opacity-0 transition-opacity duration-300" id="progress-bar">
+<div class="h-full bg-primary animate-[progress_2s_infinite_linear] origin-left"></div>
 </div>
-<div class="flex items-center gap-md">
-<button class="hidden sm:block text-on-surface hover:text-primary transition-all font-label-md text-label-md">Log In</button>
-<button class="bg-primary text-on-primary px-lg py-sm rounded hover:brightness-110 transition-all font-label-md text-label-md font-bold">Get Started</button>
+<style>
+            @keyframes progress {
+                0% { transform: translateX(-100%) scaleX(0.2); }
+                50% { transform: translateX(0%) scaleX(0.5); }
+                100% { transform: translateX(100%) scaleX(0.2); }
+            }
+        </style>
+<!-- Brand Identity -->
+<div class="mb-lg pt-sm">
+<!-- Google Logo SVG -->
+<svg aria-hidden="true" class="h-6 w-auto" viewbox="0 0 74 24">
+<path d="M9.24 4.83c-.76-.11-1.52-.16-2.28-.16-3.81 0-6.96 3.12-6.96 6.96s3.15 6.96 6.96 6.96c2.4 0 3.75-1.12 4.41-2.24l-2.07-1.15c-.48.77-1.12 1.34-2.34 1.34-1.34 0-2.34-.69-2.82-1.93l6.98-2.89-.31-.76c-.57-1.51-2.2-3.88-5.01-3.88zm-.13 3.96l-4.52 1.87c-.24-.65-.12-1.32.32-1.83.43-.5 1.07-.79 1.76-.79 1.02 0 1.95.53 2.44 1.45v-.7zM24 10V2h-2v3.2C20.7 3.5 18.6 2 16 2c-4.4 0-8 3.6-8 8s3.6 8 8 8c2.6 0 4.7-1.5 6-3.2V18h2v-8zm-8 6c-3.3 0-6-2.7-6-6s2.7-6 6-6 6 2.7 6 6-2.7 6-6 6zm17-14h-2v16h2V2zm13 8c0-4.4-3.6-8-8-8s-8 3.6-8 8 3.6 8 8 8 8-3.6 8-8zm-8 6c-3.3 0-6-2.7-6-6s2.7-6 6-6 6 2.7 6 6-2.7 6-6 6zm18-6c0-4.4-3.6-8-8-8-2.6 0-4.7 1.5-6 3.2V2h-2v16h2v-5.2c1.3 1.7 3.4 3.2 6 3.2 4.4 0 8-3.6 8-8zm-8 6c-3.3 0-6-2.7-6-6s2.7-6 6-6 6 2.7 6 6-2.7 6-6 6zM69 10V2h-2v11.5c-1.3-1.4-3.4-2.5-6-2.5-4.4 0-8 3.6-8 8s3.6 8 8 8c2.6 0 4.7-1.1 6-2.5V18h2v-8zm-8 6c-3.3 0-6-2.7-6-6s2.7-6 6-6 6 2.7 6 6-2.7 6-6 6z" fill="#4285F4"></path>
+</svg>
 </div>
+<!-- Typography Header -->
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-sm">Sign in</h1>
+<p class="font-body-lg text-body-lg text-on-surface mb-xl">Use your Google Account</p>
+<!-- Form Section -->
+<form class="w-full flex flex-col gap-xl" id="login-form" onsubmit="return false;">
+<div class="relative input-group">
+<input autocomplete="email" class="w-full h-[56px] px-md pt-sm pb-xs border border-outline rounded-lg text-on-surface font-body-lg focus:outline-none transition-all peer bg-transparent" id="email-input" placeholder=" " required="" type="email"/>
+<label class="absolute left-md top-1/2 -translate-y-1/2 text-on-surface-variant font-body-lg transition-all pointer-events-none peer-focus:text-primary" for="email-input">
+                    Email or phone
+                </label>
 </div>
-</nav>
-<main class="pt-2xl">
-<!-- Hero Section -->
-<section class="relative min-h-[921px] flex flex-col items-center justify-center text-center px-margin py-2xl">
-<div class="absolute inset-0 z-0 opacity-20 pointer-events-none">
-
-</div>
-<div class="relative z-10 max-w-4xl mx-auto">
-<div class="inline-flex items-center gap-xs bg-secondary-container/30 px-md py-xs rounded-full border border-outline-variant/30 mb-lg">
-<span class="material-symbols-outlined text-primary scale-75" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
-<span class="text-label-md font-label-md text-primary">v2.0 precision engine now live</span>
-</div>
-<h1 class="font-display text-display text-on-surface mb-md leading-tight">Master Your Workflow with <span class="text-primary">AI Precision</span></h1>
-<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto mb-xl">Zenith streamlines your professional life by automating the mundane, so you can focus on what matters most to your career.</p>
-<div class="flex flex-col sm:flex-row items-center justify-center gap-md">
-<button class="w-full sm:w-auto bg-primary text-on-primary px-xl py-md rounded-lg font-bold text-body-md hover:shadow-[0_0_20px_rgba(192,193,255,0.4)] transition-all">Start Free Trial</button>
-<button class="w-full sm:w-auto flex items-center justify-center gap-sm border border-outline-variant px-xl py-md rounded-lg font-bold text-body-md hover:bg-surface-container transition-all">
-<span class="material-symbols-outlined">play_circle</span>
-                        Watch Demo
-                    </button>
-</div>
-</div>
-</section>
-<!-- Social Proof -->
-<section class="py-xl border-y border-outline-variant/10 bg-surface-container-lowest/50">
-<div class="max-w-[1440px] mx-auto px-margin">
-<p class="text-center font-label-md text-label-md text-on-surface-variant/60 mb-lg uppercase tracking-widest">Trusted by industry leaders</p>
-<div class="flex flex-wrap justify-center items-center gap-2xl opacity-40 grayscale hover:grayscale-0 transition-all duration-700">
-<img class="h-8 w-auto" data-alt="Monochrome minimalist tech company logo for a brand named Hyperion in a sleek professional sans-serif font, styled for a dark mode interface with subtle slate tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9apdXBfUPGt3jSr0NxIQQm59JB7GMkQKCtV6CuczuWEJskcuEIXvggIhQAB7281cRrIT_I-5sPnwnlNG6N7xOuFVmOPdgM4jYcfnRUnPoc-c26QySXjtVO_EEnxCkJq5F4DLbjJ3XYA_-wO5sc7S6oPT15sftheHafB-WWyIo2XTqGP-GNR0Ohv5jV-r2ZST4m9uTKMhfWp47vbjbkJN6vo-p3SuCuBzijJn7F0x5WzWZ1Su2d1caOaasrPIv_ByTTFo4bP_HrjA"/>
-<img class="h-8 w-auto" data-alt="Minimalist corporate logo for a cloud computing brand named Nexus with a geometric icon, presented in a clean white and slate aesthetic for a dark themed website." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSaXogMHlaX2nOFlpQ8HujLldDNFQGzvBn_tpcGN3ejDcnOq94xAPLnzNUCaq4-cw4gl9nLSEXDNH1heZ4FKC9WytZ4fH_c2ex-57MaWjAu2dAGB2PoBCIiEjuH5FWp2f9GCzmo9wsOzPIpXJjaEEhXTpDgu--mAwDKCAirpx0WS4fQyYJe0ywUJIU3tz6QCsOjl0EyZJxc9DZXahxkr88jYwZvZCr3QTHUXTL63z7ttpIqFWTR8wKAOkbNycWTRFe7XFY54dmDAU"/>
-<img class="h-8 w-auto" data-alt="Professional logo for a global software firm named Vector, featuring a sharp modern symbol and bold typography suitable for high-end digital platforms." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwusHERNDuL1uj5-FB-2GVEezkQ8mxOhOdEIZFCz-4tyXHDTcyFDq0ksoDFDUNyq8wIJvDme4qlWsSjT3dffPfDYHAmriSsM17JOmqh6JP_hmd7yMuIp9zrvZaPCDDmK0n4FW3Mk2KXF3FbCLTiOkJonz1UEsZjwgOsWAkMxefRIOi_wQqGnjz6PiFynsS-YTcKMdxvGAdWcjakz1wUK42rse-4kF0dHaDFfvvefcnoGL-w4pNFmjeC8y970KuUAq-eMfp-VhVhhU"/>
-<img class="h-8 w-auto" data-alt="Tech logo for a company called Catalyst with a clean circular motif, designed to be subtle and professional on a dark navy background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJW2qpTh4-rgjVi-DINfisYYaQLDO8dpzrSMzkSwjPHWpdG0l1Y0p-3xIYg8_jV9cyeXcaao2MLFMAoAIkgU4Lz8XsQu3asWLH-M-_KVHAsphNcmpKDrsInCNk5wvQEsSnJ64_p4uBcPiG_QmDchVK0goXxwbNBvkcQGyJomwVJj7fc_V30HUDJgrvqVN6vkrgd6FzRozS4XYI6NLvjiMbiUsNEQyp2eu-6LzTchX3DcrO1apwnDso6a1grSNu8-1yCdu2lW6nbKE"/>
-<img class="h-8 w-auto" data-alt="Minimalist architectural logo for a firm called Pillar, showcasing structural balance and modern design sensibilities in slate and white tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBS4LEts-681Pb8a6z24P37lM7n8UV9GqlhdE8yK0NojrtsHU7voERd323fU5r22QI0FHiJYjsytBCs1ezn5vEkRmBMU3BB22-1M3vzYgIfoi95veMyQEmTHytmQMX4t6eN0lefkcrwtqx87sI29d-5GVgueELaldoum75okY0W_fZJaIwp0SARTPbyFztZQpWa0ILvZb5iM7Z71zg5pUvFGMT2zX5n1lHOKnYtFWubiwKXv3BGAMGeIyst9-_pzG5PQL5Q22obHQ"/>
-</div>
-</div>
-</section>
-<!-- Features Bento Grid -->
-<section class="py-2xl max-w-[1440px] mx-auto px-margin">
-<div class="flex flex-col md:flex-row justify-between items-end mb-2xl gap-md">
-<div class="max-w-xl">
-<h2 class="font-headline-lg text-headline-lg text-on-surface mb-sm">Tools for the High-Performer</h2>
-<p class="text-on-surface-variant font-body-md">Engineered to eliminate decision fatigue and optimize every minute of your working day.</p>
-</div>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
-<!-- Feature 1 -->
-<div class="glass-card p-xl rounded-xl ai-shimmer group hover:border-primary/40 transition-all">
-<div class="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center mb-lg group-hover:bg-primary/20 transition-colors">
-<span class="material-symbols-outlined text-primary">calendar_month</span>
-</div>
-<h3 class="font-headline-md text-headline-md text-on-surface mb-md">Smart Scheduling</h3>
-<p class="text-on-surface-variant font-body-md mb-xl">Our neural engine analyzes your peak productivity hours and reshuffles your calendar for maximum output.</p>
-<div class="mt-auto h-48 rounded-lg overflow-hidden bg-surface-container border border-outline-variant/20 relative">
-<img class="object-cover w-full h-full opacity-60" data-alt="A clean, minimalist UI dashboard mockup showing an intelligent calendar interface with soft indigo blocks and smooth animations, set against a dark navy and slate digital background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6GBVGtGtJ9lIOjWa5vlR_eWPezT43LYMzOOYAjIwDLz1vfCn2626PsT6crU3vnrt1aRPEbBgAx3eRBVymbD7-aOof1ycUi3FEqTsb9Uwb7ruHkw92abRU48ip-TOR49SJEwswriEcAnQzTjDcc-2zwrnCs2bEim5zi0BkOxkpdhbAoYlA6GpWZcOAFawVlFI6us7seGxpo8aH8Ks4hVJ96sGymJkHAro_677Mv8098eGmnJySKeJWW-kB8tdTX5kkgoDvbqFwvqw"/>
-</div>
-</div>
-<!-- Feature 2 -->
-<div class="glass-card p-xl rounded-xl ai-shimmer group hover:border-primary/40 transition-all">
-<div class="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center mb-lg group-hover:bg-primary/20 transition-colors">
-<span class="material-symbols-outlined text-primary">do_not_disturb_on</span>
-</div>
-<h3 class="font-headline-md text-headline-md text-on-surface mb-md">Focus Guard</h3>
-<p class="text-on-surface-variant font-body-md mb-xl">Intelligent notification filtering that only allows business-critical alerts through during your deep work sessions.</p>
-<div class="mt-auto h-48 rounded-lg overflow-hidden bg-surface-container border border-outline-variant/20 relative">
-<img class="object-cover w-full h-full opacity-60" data-alt="An abstract digital visualization of focused energy waves being filtered through a geometric shield, featuring glowing indigo gradients and clean slate lines in a minimalist aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBE7_nHQWoiB-DKCFCMyEeeRWv64s4YRsnQmqnbKytVHf-sFbjZuBPsxitMhz2KWce-jNOjYiAOgOmvptTuosiYy4AK2TKuCxXJ0YzxiXJD1NTJgO-7aB0AuF7rK4D2d_x5A8XCwTsUQw7hP1v1o5PkDh7pnv8KiEAGVEs5N1bi2TL3Tgznes8WtYgKvEFhC3fQQy5oAH5jxitFp613dqJZIghpSqbks0WSuKQ6ohO75XkD5TdJzYnujANa6upLsbTpsSzTz9w1U20"/>
-</div>
-</div>
-<!-- Feature 3 -->
-<div class="glass-card p-xl rounded-xl ai-shimmer group hover:border-primary/40 transition-all">
-<div class="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center mb-lg group-hover:bg-primary/20 transition-colors">
-<span class="material-symbols-outlined text-primary">summarize</span>
-</div>
-<h3 class="font-headline-md text-headline-md text-on-surface mb-md">Action Insights</h3>
-<p class="text-on-surface-variant font-body-md mb-xl">Automated meeting transcriptions converted into executive summaries and actionable task lists within seconds.</p>
-<div class="mt-auto h-48 rounded-lg overflow-hidden bg-surface-container border border-outline-variant/20 relative">
-<img class="object-cover w-full h-full opacity-60" data-alt="A conceptual data visualization showing a complex network of information distilling into clear, bright points of light, representing AI-generated meeting summaries on a professional dark background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAz0-4faNRJmuWg6mal_GR_K9s3I5A3bg5KbcjneLNyV0R-NvXPreUrwAHh76HygHXTbBl40semSQKiyC735Xl5ersk4PDiLZnATUOh9x-SlqmldGEp2gjtz8yanISzA8T59LXY3_k-aOTHh7O4FKHS3M7Z8HSfc7vP5rg9Rp1oVlIQMLH03hkewo2SYLn5FExTlIoEDDbtDXyx4p8k6Ri4Zv6w-lS3WUjH1jnQF86F2Fjn4O7HYaAJo8C8vqwul2ADP_0a9Xf1I2U"/>
-</div>
-</div>
-</div>
-</section>
-<!-- Process Section -->
-<section class="py-2xl bg-surface-container-low">
-<div class="max-w-[1440px] mx-auto px-margin">
-<div class="text-center mb-2xl">
-<h2 class="font-headline-lg text-headline-lg text-on-surface mb-md">How Zenith Works</h2>
-<p class="text-on-surface-variant max-w-2xl mx-auto">Three steps to a more focused professional life.</p>
-</div>
-<div class="flex flex-col md:flex-row gap-2xl justify-between items-start">
-<!-- Step 1 -->
-<div class="flex-1 text-center group">
-<div class="relative w-24 h-24 mx-auto mb-lg">
-<div class="absolute inset-0 bg-primary/20 rounded-full blur-xl group-hover:bg-primary/40 transition-all"></div>
-<div class="relative w-full h-full flex items-center justify-center bg-surface-container border border-outline-variant rounded-full text-headline-md font-bold text-primary">1</div>
-</div>
-<h4 class="font-headline-md text-headline-md text-on-surface mb-sm">Connect Apps</h4>
-<p class="text-on-surface-variant">Securely sync your calendar, email, and task managers with one-click integrations.</p>
-</div>
-<!-- Step 2 -->
-<div class="flex-1 text-center group">
-<div class="relative w-24 h-24 mx-auto mb-lg">
-<div class="absolute inset-0 bg-primary/20 rounded-full blur-xl group-hover:bg-primary/40 transition-all"></div>
-<div class="relative w-full h-full flex items-center justify-center bg-surface-container border border-outline-variant rounded-full text-headline-md font-bold text-primary">2</div>
-</div>
-<h4 class="font-headline-md text-headline-md text-on-surface mb-sm">Let AI Learn</h4>
-<p class="text-on-surface-variant">Zenith observes your work patterns for 48 hours to create a bespoke productivity blueprint.</p>
-</div>
-<!-- Step 3 -->
-<div class="flex-1 text-center group">
-<div class="relative w-24 h-24 mx-auto mb-lg">
-<div class="absolute inset-0 bg-primary/20 rounded-full blur-xl group-hover:bg-primary/40 transition-all"></div>
-<div class="relative w-full h-full flex items-center justify-center bg-surface-container border border-outline-variant rounded-full text-headline-md font-bold text-primary">3</div>
-</div>
-<h4 class="font-headline-md text-headline-md text-on-surface mb-sm">Reclaim Your Time</h4>
-<p class="text-on-surface-variant">Experience 10+ hours of reclaimed time weekly as Zenith manages the complexity of your day.</p>
-</div>
-</div>
-</div>
-</section>
-<!-- Testimonial -->
-<section class="py-2xl max-w-4xl mx-auto px-margin">
-<div class="glass-card p-2xl rounded-2xl relative overflow-hidden text-center">
-<span class="material-symbols-outlined text-primary/20 absolute -top-4 -left-4 text-9xl">format_quote</span>
-<p class="font-headline-md text-headline-md text-on-surface italic relative z-10 mb-xl">
-                    "Zenith isn't just an assistant; it's a force multiplier. It has effectively saved me over 10 hours a week by managing the low-leverage tasks I used to get bogged down in."
-                </p>
-<div class="flex flex-col items-center gap-sm">
-<img class="w-16 h-16 rounded-full object-cover border-2 border-primary" data-alt="Professional headshot of a confident tech CEO in a minimalist setting with soft, natural lighting. The style is modern corporate with a focus on leadership and clarity, reflecting a high-performance environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLHZ-3E-LXq_QR987sLoYOTsDTuoBArpY7Idc72J_zAmt0Gyxlatbw8qp7t4Gi3c5WgMrBzPwV1qoJNQko_5cVlvNvQsLRBtahOoP82UQSpE-qNvOaS2BLUwdOJYFHJzNQTcZsR6YB_jCrgfoF8S-1gm_BU7l_fc_tRiPJkd8cSZGHRiQmH6QegytuQ3U7ZPWVak6kz470mGAqhldZ0jL4H8wcdG78eEjSkqv5dPvOR9pUi8jWpLVSUxY9P8tP2YFjYSx17wAmSyw"/>
 <div>
-<p class="font-bold text-on-surface">Elena Rodriguez</p>
-<p class="text-on-surface-variant text-label-md uppercase tracking-wider">CEO, Nexus Systems</p>
+<button class="text-primary font-label-lg hover:bg-surface-container-low px-base py-xs rounded transition-colors -ml-base" type="button">
+                    Forgot email?
+                </button>
 </div>
+<div class="mt-md">
+<p class="text-on-surface-variant font-body-md leading-relaxed">
+                    Not your computer? Use Guest mode to sign in privately.
+                    <a class="text-primary font-label-lg ml-xs hover:underline" href="#">Learn more about using Guest mode</a>
+</p>
 </div>
+<!-- Action Cluster -->
+<div class="flex items-center justify-between mt-xl">
+<button class="text-primary font-label-lg px-md h-[40px] flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors active:bg-surface-container-high" type="button">
+                    Create account
+                </button>
+<button class="bg-primary text-on-primary font-label-lg px-lg h-[40px] flex items-center justify-center rounded-full hover:bg-primary-container transition-all active:opacity-90 shadow-sm" id="next-button" onclick="simulateLoading()" type="submit">
+                    Next
+                </button>
 </div>
-</section>
-<!-- Final CTA -->
-<section class="py-2xl px-margin relative">
-<div class="max-w-4xl mx-auto text-center py-2xl bg-primary-container/20 rounded-3xl border border-primary/20 overflow-hidden">
-<div class="absolute inset-0 opacity-10 pointer-events-none">
-
-</div>
-<div class="relative z-10 px-md">
-<h2 class="font-display text-display text-on-surface mb-md">Ready to Reach Your Zenith?</h2>
-<p class="text-body-lg text-on-surface-variant max-w-xl mx-auto mb-xl">Join 5,000+ professionals who have transformed their relationship with work.</p>
-<button class="bg-primary text-on-primary px-2xl py-md rounded-lg font-bold text-body-md hover:scale-105 transition-transform">Get Started Today</button>
-<p class="mt-md text-label-md text-on-surface-variant/60">No credit card required. 14-day free trial.</p>
-</div>
-</div>
-</section>
+</form>
 </main>
-<!-- Footer -->
-<footer class="bg-surface-container-lowest border-t border-outline-variant/20">
-<div class="max-w-[1440px] mx-auto px-margin py-2xl flex flex-col md:flex-row justify-between items-center gap-md">
-<div class="flex flex-col items-center md:items-start gap-sm">
-<div class="text-headline-md font-headline-md font-bold text-on-surface">Zenith</div>
-<p class="font-label-md text-label-md text-on-surface-variant opacity-80">© 2024 Zenith AI. Precision productivity for professionals.</p>
+<!-- Shared Footer -->
+<footer class="fixed bottom-0 w-full flex flex-wrap justify-between items-center px-lg py-md max-w-[448px] mx-auto left-0 right-0 font-label-md text-label-md text-on-surface-variant bg-transparent">
+<div class="flex items-center gap-md">
+<span class="cursor-pointer hover:text-on-surface transition-colors flex items-center gap-xs">
+                English (United States)
+                <span class="material-symbols-outlined text-[16px]">arrow_drop_down</span>
+</span>
 </div>
-<div class="flex flex-wrap justify-center gap-xl">
-<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md" href="#">Privacy Policy</a>
-<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md" href="#">Terms of Service</a>
-<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md" href="#">Security</a>
-<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md" href="#">Status</a>
-</div>
+<div class="flex gap-lg">
+<a class="hover:text-on-surface dark:hover:text-on-surface underline transition-all duration-200" href="#">Help</a>
+<a class="hover:text-on-surface dark:hover:text-on-surface underline transition-all duration-200" href="#">Privacy</a>
+<a class="hover:text-on-surface dark:hover:text-on-surface underline transition-all duration-200" href="#">Terms</a>
 </div>
 </footer>
 <script>
-        // Subtle scroll reveal interaction
-        document.addEventListener('DOMContentLoaded', () => {
-            const observerOptions = {
-                threshold: 0.1
-            };
+        function simulateLoading() {
+            const btn = document.getElementById('next-button');
+            const bar = document.getElementById('progress-bar');
+            const input = document.getElementById('email-input');
+            
+            if (input.value.trim() !== "") {
+                bar.style.opacity = '1';
+                btn.disabled = true;
+                btn.style.opacity = '0.7';
+                btn.innerText = 'Checking...';
+                
+                setTimeout(() => {
+                    bar.style.opacity = '0';
+                    btn.disabled = false;
+                    btn.style.opacity = '1';
+                    btn.innerText = 'Next';
+                }, 1500);
+            }
+        }
 
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('opacity-100', 'translate-y-0');
-                        entry.target.classList.remove('opacity-0', 'translate-y-8');
-                    }
-                });
-            }, observerOptions);
-
-            document.querySelectorAll('section').forEach(section => {
-                section.classList.add('transition-all', 'duration-1000', 'opacity-0', 'translate-y-8');
-                observer.observe(section);
-            });
+        // Language dropdown mock interaction
+        document.querySelector('.material-symbols-outlined').parentElement.addEventListener('click', () => {
+            console.log('Language selector triggered');
         });
     </script>
 </body></html>
