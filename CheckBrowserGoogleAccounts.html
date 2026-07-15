@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Gmail Connect</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body class="bg-gray-50 font-sans antialiased min-h-screen flex flex-col justify-between">
+
+    <header class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <h1 class="text-xl font-bold text-gray-900 flex items-center gap-2">
+                <span class="text-red-500">✉</span> MailConnect
+            </h1>
+            <div id="user-profile" class="hidden flex items-center gap-3">
+                <img id="user-avatar" src="" alt="Avatar" class="w-8 h-8 rounded-full border">
+                <span id="user-name" class="text-sm font-medium text-gray-700 hidden md:inline"></span>
+                <button onclick="handleSignOut()" class="text-xs bg-gray-100 hover:bg-gray-200 text-gray-600 px-3 py-1.5 rounded-lg transition">Sign Out</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <div id="logged-out-view" class="max-w-md mx-auto my-12 bg-white p-8 rounded-2xl shadow-sm border border-gray-100 text-center">
+            <h2 class="text-2xl font-bold text-gray-900 mb-2">Connect Your Google Account</h2>
+            <p class="text-gray-500 text-sm mb-6">Authorize this application to view your Google Mail account details securely using Google OAuth.</p>
+            
+            <div class="flex justify-center">
+                <div id="g_id_onload"
+                     data-client_id="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com"
+                     data-callback="handleCredentialResponse"
+                     data-auto_prompt="false">
+                </div>
+                <div class="g_id_signin"
+                     data-type="standard"
+                     data-size="large"
+                     data-theme="outline"
+                     data-text="sign_in_with"
+                     data-shape="rectangular"
+                     data-logo_alignment="left">
+                </div>
+            </div>
+        </div>
+
+        <div id="logged-in-view" class="hidden space-y-6">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                <h2 class="text-lg font-semibold text-gray-900 mb-4">Active Session Details</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="p-4 bg-gray-50 rounded-xl">
+                        <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Email Address</span>
+                        <p id="account-email" class="text-gray-800 font-medium mt-1">Not Loaded</p>
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-xl">
+                        <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Authentication Status</span>
+                        <p class="text-green-600 font-medium mt-1 flex items-center gap-1">
+                            <span class="h-2 w-2 rounded-full bg-green-500 inline-block"></span> Connected via OAuth 2.0
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="p-6 border-b border-gray-100 flex items-center justify-between">
+                    <h3 class="text-lg font-semibold text-gray-900">Recent Messages</h3>
+                    <button onclick="fetchGmailData()" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-xl transition shadow-sm">
+                        Fetch Mail Data
+                    </button>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-gray-50 text-gray-500 text-xs font-semibold uppercase border-b border-gray-100">
+                                <th class="px-6 py-3">From</th>
+                                <th class="px-6 py-3">Subject</th>
+                                <th class="px-6 py-3 hidden sm:table-cell">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="email-list" class="divide-y divide-gray-100 text-sm text-gray-600">
+                            <tr>
+                                <td colspan="3" class="px-6 py-8 text-center text-gray-400">
+                                    Click "Fetch Mail Data" to query the Gmail API using your secure token.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="bg-white border-t border-gray-100 py-4 text-center text-xs text-gray-400">
+        &copy; 2026 MailConnect App. Built with Google Identity Services.
+    </footer>
+
+    <script>
+        // JWT Decoder to read basic profile info from Google Sign-In
+        function decodeJwt(token) {
+            try {
+                const base64Url = token.split('.')[1];
+                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                return JSON.parse(window.atob(base64));
+            } catch (e) {
+                return null;
+            }
+        }
+
+        // Callback function when user successfully authenticates
+        function handleCredentialResponse(response) {
+            const userData = decodeJwt(response.credential);
+            
+            if (userData) {
+                // Update UI elements with account info
+                document.getElementById('user-name').innerText = userData.name;
+                document.getElementById('user-avatar').src = userData.picture;
+                document.getElementById('account-email').innerText = userData.email;
+
+                // Toggle views
+                document.getElementById('logged-out-view').classList.add('hidden');
+                document.getElementById('user-profile').classList.remove('hidden');
+                document.getElementById('logged-in-view').classList.remove('hidden');
+
+                // Save credential/token for API calls
+                window.googleUserToken = response.credential;
+            }
+        }
+
+        // Simulating the Gmail API Data Fetch
+        function fetchGmailData() {
+            const emailListContainer = document.getElementById('email-list');
+            
+            // In a production setup, you pass `window.googleUserToken` to your backend 
+            // or use `gapi.client.gmail` to request the 'https://www.googleapis.com/auth/gmail.readonly' scope.
+            emailListContainer.innerHTML = `
+                <tr>
+                    <td class="px-6 py-4 font-medium text-gray-900">Google Security</td>
+                    <td class="px-6 py-4">Security alert for your linked account...</td>
+                    <td class="px-6 py-4 hidden sm:table-cell">10:42 AM</td>
+                </tr>
+                <tr>
+                    <td class="px-6 py-4 font-medium text-gray-900">GitHub</td>
+                    <td class="px-6 py-4">[GitHub] Security Alert: Dependency vulnerability detected...</td>
+                    <td class="px-6 py-4 hidden sm:table-cell">Yesterday</td>
+                </tr>
+            `;
+        }
+
+        // Sign Out Logic
+        function handleSignOut() {
+            // Reset UI States
+            document.getElementById('logged-out-view').classList.remove('hidden');
+            document.getElementById('user-profile').classList.add('hidden');
+            document.getElementById('logged-in-view').classList.add('hidden');
+            window.googleUserToken = null;
+            
+            // Revoke Google session
+            google.accounts.id.disableAutoSelect();
+        }
+    </script>
+</body>
+</html>
