@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Signal Check — which account ecosystem is your browser leaning toward?</title>
+<title>Sign-In Check — can this browser log into Google, Microsoft, or Apple?</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -12,24 +12,24 @@
     --bg: #14171c;
     --bg-panel: #1b1f26;
     --bg-panel-raised: #21262f;
+    --bg-input: #171b21;
     --line: #2c323d;
     --text: #e7e9ec;
     --text-dim: #8b93a3;
     --text-faint: #5a6270;
     --cyan: #5eead4;
     --amber: #f5b942;
+    --green: #6fd08c;
+    --red: #f5716c;
     --google: #4f8dfb;
     --microsoft: #6fcf6f;
     --apple: #d9a5f0;
-    --danger: #f5716c;
     --radius: 14px;
     --mono: 'JetBrains Mono', ui-monospace, monospace;
     --sans: 'Inter', system-ui, -apple-system, sans-serif;
   }
-
   *{ box-sizing: border-box; }
   html{ scroll-behavior: smooth; }
-
   body{
     margin:0;
     background: var(--bg);
@@ -41,376 +41,236 @@
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
   }
-
   a{ color: inherit; }
+  .wrap{ max-width: 960px; margin: 0 auto; padding: 32px 20px 80px; }
 
-  .wrap{
-    max-width: 920px;
-    margin: 0 auto;
-    padding: 32px 20px 80px;
-  }
+  header{ display:flex; align-items:center; justify-content: space-between; gap: 16px; margin-bottom: 36px; flex-wrap: wrap; }
+  .brand{ display:flex; align-items:center; gap: 10px; font-family: var(--mono); font-weight: 700; letter-spacing: 0.02em; font-size: 15px; }
+  .brand .dot{ width: 9px; height: 9px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 0 3px rgba(94,234,212,0.15); animation: pulse 2.4s ease-in-out infinite; flex-shrink: 0; }
+  @keyframes pulse{ 0%,100%{ box-shadow: 0 0 0 3px rgba(94,234,212,0.15); } 50%{ box-shadow: 0 0 0 6px rgba(94,234,212,0.06); } }
+  .timestamp{ font-family: var(--mono); font-size: 12px; color: var(--text-faint); }
 
-  /* ---------- header ---------- */
-  header{
-    display:flex;
-    align-items:center;
-    justify-content: space-between;
-    gap: 16px;
-    margin-bottom: 36px;
-    flex-wrap: wrap;
-  }
-  .brand{
-    display:flex;
-    align-items:center;
-    gap: 10px;
-    font-family: var(--mono);
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    font-size: 15px;
-  }
-  .brand .dot{
-    width: 9px; height: 9px; border-radius: 50%;
-    background: var(--cyan);
-    box-shadow: 0 0 0 3px rgba(94,234,212,0.15);
-    animation: pulse 2.4s ease-in-out infinite;
-    flex-shrink: 0;
-  }
-  @keyframes pulse{
-    0%,100%{ box-shadow: 0 0 0 3px rgba(94,234,212,0.15); }
-    50%{ box-shadow: 0 0 0 6px rgba(94,234,212,0.06); }
-  }
-  .timestamp{
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--text-faint);
-  }
+  .hero{ padding: 40px 0 8px; }
+  .eyebrow{ font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--cyan); margin: 0 0 14px; }
+  h1{ font-family: var(--mono); font-size: clamp(28px, 5vw, 42px); font-weight: 800; line-height: 1.14; margin: 0 0 18px; letter-spacing: -0.01em; }
+  .hero p{ color: var(--text-dim); font-size: 16px; max-width: 64ch; margin: 0 0 8px; }
+  .hero .caveat{ display:flex; align-items:flex-start; gap: 8px; margin-top: 18px; padding: 10px 14px; background: rgba(245, 185, 66, 0.08); border: 1px solid rgba(245, 185, 66, 0.25); border-radius: 10px; font-size: 13.5px; color: #e6c67a; max-width: 64ch; }
+  .hero .caveat svg{ flex-shrink:0; margin-top:2px; }
 
-  /* ---------- hero ---------- */
-  .hero{
-    padding: 40px 0 8px;
-  }
-  .eyebrow{
-    font-family: var(--mono);
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--cyan);
-    margin: 0 0 14px;
-  }
-  h1{
-    font-family: var(--mono);
-    font-size: clamp(28px, 5vw, 44px);
-    font-weight: 800;
-    line-height: 1.12;
-    margin: 0 0 18px;
-    letter-spacing: -0.01em;
-  }
-  .hero p{
-    color: var(--text-dim);
-    font-size: 16px;
-    max-width: 60ch;
-    margin: 0 0 8px;
-  }
-  .hero .caveat{
-    display:inline-flex;
-    align-items:center;
-    gap: 8px;
-    margin-top: 18px;
-    padding: 10px 14px;
-    background: rgba(245, 185, 66, 0.08);
-    border: 1px solid rgba(245, 185, 66, 0.25);
-    border-radius: 10px;
-    font-size: 13.5px;
-    color: #e6c67a;
-  }
-  .hero .caveat svg{ flex-shrink:0; }
+  .section-title{ font-family: var(--mono); font-size: 13px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-faint); margin: 44px 0 16px; display:flex; align-items:center; gap:10px; }
+  .section-title .n{ color: var(--cyan); }
 
-  /* ---------- scan panel ---------- */
-  .scan-panel{
-    margin-top: 32px;
-    background: var(--bg-panel);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    overflow: hidden;
-  }
-  .scan-strip{
-    position: relative;
-    height: 64px;
-    display:flex;
-    align-items:center;
-    padding: 0 20px;
-    border-bottom: 1px solid var(--line);
-    background: linear-gradient(90deg, var(--bg-panel-raised), var(--bg-panel));
-    overflow: hidden;
-  }
-  .scan-strip .label{
-    font-family: var(--mono);
-    font-size: 13px;
-    color: var(--text-dim);
-    z-index: 2;
-  }
-  .scan-strip .sweep{
-    position:absolute;
-    top:0; left: -30%;
-    width: 30%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(94,234,212,0.18), transparent);
-    animation: sweep 2.2s ease-in-out infinite;
-  }
-  @keyframes sweep{
-    0%{ left: -30%; }
-    100%{ left: 100%; }
-  }
-  .scan-strip.done .sweep{ display:none; }
-  .scan-strip.done .label{ color: var(--cyan); }
+  /* env check */
+  .env-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 10px; }
+  .env-item{ background: var(--bg-panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display:flex; align-items:center; gap: 10px; }
+  .env-icon{ width: 20px; height: 20px; border-radius: 50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size: 12px; font-weight:700; }
+  .env-icon.pass{ background: rgba(111,208,140,0.15); color: var(--green); }
+  .env-icon.fail{ background: rgba(245,113,108,0.15); color: var(--red); }
+  .env-icon.unknown{ background: rgba(245,185,66,0.15); color: var(--amber); }
+  .env-text{ font-size: 13.5px; }
+  .env-text .k{ display:block; font-weight:600; }
+  .env-text .v{ display:block; color: var(--text-faint); font-family: var(--mono); font-size: 11.5px; margin-top: 2px; }
 
-  .readout{
-    padding: 22px 20px;
-    display:grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 14px 24px;
-    font-family: var(--mono);
-    font-size: 13px;
-  }
-  .readout .row{
-    display:flex;
-    justify-content: space-between;
-    gap: 12px;
-    border-bottom: 1px dashed var(--line);
-    padding-bottom: 10px;
-  }
-  .readout .k{ color: var(--text-faint); }
-  .readout .v{ color: var(--text); text-align: right; word-break: break-word; }
-  @media (max-width: 560px){
-    .readout{ grid-template-columns: 1fr; }
-  }
+  .popup-test-row{ margin-top: 12px; display:flex; align-items:center; gap: 12px; flex-wrap: wrap; }
+  .btn-ghost{ font-family: var(--mono); font-size: 12.5px; background: var(--bg-panel-raised); border: 1px solid var(--line); color: var(--text-dim); padding: 9px 14px; border-radius: 8px; cursor:pointer; }
+  .btn-ghost:hover{ border-color: var(--cyan); color: var(--cyan); }
+  .popup-result{ font-family: var(--mono); font-size: 12.5px; color: var(--text-faint); }
 
-  /* ---------- ecosystem cards ---------- */
-  .section-title{
-    font-family: var(--mono);
-    font-size: 13px;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--text-faint);
-    margin: 44px 0 16px;
-  }
+  /* setup */
+  details.setup{ background: var(--bg-panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 4px 20px; }
+  details.setup summary{ cursor:pointer; padding: 16px 0; font-family: var(--mono); font-size: 13.5px; font-weight: 700; list-style: none; display:flex; align-items:center; justify-content:space-between; }
+  details.setup summary::-webkit-details-marker{ display:none; }
+  details.setup summary .arrow{ transition: transform 0.2s ease; color: var(--text-faint); }
+  details.setup[open] summary .arrow{ transform: rotate(90deg); }
+  .setup-body{ padding: 4px 0 22px; border-top: 1px solid var(--line); margin-top: 4px; }
+  .setup-body p{ color: var(--text-dim); font-size: 13.5px; margin: 14px 0 16px; }
+  .setup-provider{ margin-bottom: 22px; }
+  .setup-provider h3{ font-family: var(--mono); font-size: 13px; margin: 0 0 10px; display:flex; align-items:center; gap:8px; }
+  .setup-provider h3 .swatch{ width:9px; height:9px; border-radius:2px; }
+  .field-row{ display:grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px; }
+  @media (max-width:600px){ .field-row{ grid-template-columns: 1fr; } }
+  .field{ display:flex; flex-direction:column; gap: 5px; }
+  .field label{ font-size: 11.5px; color: var(--text-faint); font-family: var(--mono); }
+  .field input{ background: var(--bg-input); border: 1px solid var(--line); color: var(--text); padding: 9px 11px; border-radius: 8px; font-family: var(--mono); font-size: 12.5px; }
+  .field input:focus{ outline: none; border-color: var(--cyan); }
+  .field-note{ font-size: 11.5px; color: var(--text-faint); margin-top: 2px; }
+  .save-row{ display:flex; align-items:center; gap: 12px; margin-top: 18px; }
+  .btn-primary{ font-family: var(--mono); font-size: 13px; font-weight:700; background: var(--cyan); color: #0b1512; border: none; padding: 10px 18px; border-radius: 8px; cursor:pointer; }
+  .btn-primary:hover{ filter: brightness(1.08); }
+  .save-status{ font-family: var(--mono); font-size: 12px; color: var(--green); opacity:0; transition: opacity 0.3s ease; }
+  .save-status.show{ opacity:1; }
 
-  .cards{
-    display:grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-  }
-  @media (max-width: 700px){
-    .cards{ grid-template-columns: 1fr; }
-  }
+  /* provider cards */
+  .cards{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  @media (max-width: 780px){ .cards{ grid-template-columns: 1fr; } }
+  .card{ background: var(--bg-panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; display:flex; flex-direction:column; }
+  .card-top{ display:flex; align-items:center; justify-content: space-between; margin-bottom: 6px; }
+  .card-name{ display:flex; align-items:center; gap:10px; font-weight: 700; font-size: 15px; }
+  .card-name .swatch{ width: 10px; height: 10px; border-radius: 3px; background: var(--accent); }
+  .card-badge{ font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.08em; padding: 3px 8px; border-radius: 20px; background: rgba(255,255,255,0.06); color: var(--text-faint); }
+  .card-badge.configured{ background: color-mix(in srgb, var(--accent) 20%, transparent); color: var(--accent); }
+  .card-desc{ font-size: 13px; color: var(--text-dim); margin: 8px 0 16px; min-height: 40px; }
+  .card-action{ margin-top: auto; }
+  #googleBtnContainer{ min-height: 44px; display:flex; align-items:center; }
+  .provider-btn{ width:100%; display:flex; align-items:center; justify-content:center; gap: 8px; padding: 11px 14px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg-panel-raised); color: var(--text); font-family: var(--sans); font-weight: 600; font-size: 13.5px; cursor:pointer; }
+  .provider-btn:hover{ border-color: var(--accent); }
+  .provider-btn:disabled{ opacity: 0.45; cursor: not-allowed; }
+  .provider-btn:disabled:hover{ border-color: var(--line); }
+  .result-box{ margin-top: 14px; padding: 10px 12px; border-radius: 8px; font-size: 12.5px; font-family: var(--mono); display:none; }
+  .result-box.show{ display:block; }
+  .result-box.ok{ background: rgba(111,208,140,0.1); border: 1px solid rgba(111,208,140,0.3); color: var(--green); }
+  .result-box.fail{ background: rgba(245,113,108,0.1); border: 1px solid rgba(245,113,108,0.3); color: var(--red); }
+  .result-box.pending{ background: rgba(94,234,212,0.08); border: 1px solid rgba(94,234,212,0.25); color: var(--cyan); }
+  .result-box details{ margin-top: 8px; }
+  .result-box summary{ cursor:pointer; color: inherit; opacity: 0.8; font-size: 11px; }
+  .result-box pre{ white-space: pre-wrap; word-break: break-word; font-size: 11px; margin: 6px 0 0; opacity: 0.8; max-height: 140px; overflow:auto; }
 
-  .card{
-    background: var(--bg-panel);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    padding: 20px;
-    position: relative;
-    transition: border-color 0.3s ease, transform 0.3s ease;
-  }
-  .card.leader{
-    border-color: var(--accent, var(--cyan));
-    box-shadow: 0 0 0 1px var(--accent, var(--cyan)) inset, 0 8px 30px -12px var(--accent, var(--cyan));
-  }
-  .card-top{
-    display:flex;
-    align-items:center;
-    justify-content: space-between;
-    margin-bottom: 14px;
-  }
-  .card-name{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    font-weight: 700;
-    font-size: 15px;
-  }
-  .card-name .swatch{
-    width: 10px; height: 10px; border-radius: 3px;
-    background: var(--accent);
-  }
-  .card-badge{
-    font-family: var(--mono);
-    font-size: 10.5px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    padding: 3px 8px;
-    border-radius: 20px;
-    background: rgba(255,255,255,0.06);
-    color: var(--text-faint);
-  }
-  .card.leader .card-badge{
-    background: color-mix(in srgb, var(--accent) 22%, transparent);
-    color: var(--accent);
-  }
-  .meter{
-    height: 7px;
-    background: rgba(255,255,255,0.06);
-    border-radius: 20px;
-    overflow: hidden;
-    margin-bottom: 10px;
-  }
-  .meter-fill{
-    height: 100%;
-    background: var(--accent);
-    width: 0%;
-    border-radius: 20px;
-    transition: width 1s cubic-bezier(.16,1,.3,1);
-  }
-  .card-note{
-    font-size: 13px;
-    color: var(--text-dim);
-    margin: 0;
-  }
-  .card-signals{
-    margin-top: 12px;
-    padding-top: 12px;
-    border-top: 1px solid var(--line);
-    font-family: var(--mono);
-    font-size: 11.5px;
-    color: var(--text-faint);
-    display:flex;
-    flex-wrap:wrap;
-    gap: 6px;
-  }
-  .card-signals span{
-    background: rgba(255,255,255,0.04);
-    padding: 3px 8px;
-    border-radius: 6px;
-  }
-
-  /* ---------- explainer ---------- */
-  .explainer{
-    margin-top: 44px;
-    background: var(--bg-panel);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    padding: 24px;
-  }
-  .explainer h2{
-    font-family: var(--mono);
-    font-size: 16px;
-    margin: 0 0 12px;
-    display:flex;
-    align-items:center;
-    gap: 10px;
-  }
-  .explainer p{
-    color: var(--text-dim);
-    font-size: 14.5px;
-    margin: 0 0 12px;
-  }
-  .explainer ul{
-    margin: 0 0 12px;
-    padding-left: 20px;
-    color: var(--text-dim);
-    font-size: 14.5px;
-  }
+  .explainer{ margin-top: 44px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
+  .explainer h2{ font-family: var(--mono); font-size: 16px; margin: 0 0 12px; }
+  .explainer p{ color: var(--text-dim); font-size: 14.5px; margin: 0 0 12px; }
+  .explainer ul{ margin: 0 0 4px; padding-left: 20px; color: var(--text-dim); font-size: 14.5px; }
   .explainer li{ margin-bottom: 6px; }
-  .explainer a.link{
-    color: var(--cyan);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
+  .explainer a.link{ color: var(--cyan); text-decoration: underline; text-underline-offset: 3px; }
 
-  /* ---------- try real sign-in ---------- */
-  .signin-row{
-    display:flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-top: 18px;
-  }
-  .signin-btn{
-    flex: 1 1 180px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap: 8px;
-    padding: 12px 14px;
-    border-radius: 10px;
-    border: 1px solid var(--line);
-    background: var(--bg-panel-raised);
-    color: var(--text-dim);
-    font-family: var(--sans);
-    font-weight: 600;
-    font-size: 13.5px;
-    cursor: not-allowed;
-    opacity: 0.7;
-  }
-  .signin-note{
-    font-size: 12.5px;
-    color: var(--text-faint);
-    margin-top: 10px;
-  }
+  footer{ margin-top: 50px; padding-top: 20px; border-top: 1px solid var(--line); display:flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; font-size: 12.5px; color: var(--text-faint); font-family: var(--mono); }
 
-  footer{
-    margin-top: 50px;
-    padding-top: 20px;
-    border-top: 1px solid var(--line);
-    display:flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 10px;
-    font-size: 12.5px;
-    color: var(--text-faint);
-    font-family: var(--mono);
-  }
-
-  @media (prefers-reduced-motion: reduce){
-    .sweep, .brand .dot{ animation: none; }
-  }
+  @media (prefers-reduced-motion: reduce){ .brand .dot{ animation: none; } }
 </style>
 </head>
 <body>
 <div class="wrap">
 
   <header>
-    <div class="brand"><span class="dot"></span> SIGNAL CHECK</div>
+    <div class="brand"><span class="dot"></span> SIGN-IN CHECK</div>
     <div class="timestamp" id="timestamp">—</div>
   </header>
 
   <div class="hero">
-    <p class="eyebrow">Client-side inference, not account access</p>
-    <h1>Which account ecosystem does your browser lean toward?</h1>
-    <p>This page reads publicly available browser signals — the user agent, platform, and a few feature flags — and infers whether your setup looks more Google, Microsoft, or Apple flavored.</p>
+    <p class="eyebrow">Real sign-in attempts, not a guess</p>
+    <h1>Can this browser actually log into Google, Microsoft, or Apple?</h1>
+    <p>This page uses each provider's own official sign-in SDK to make a genuine login attempt — a real Google button, a real Microsoft popup, a real Apple sign-in — and reports exactly what happened, success or failure.</p>
     <div class="caveat">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.29 3.86l-8.48 14.7A2 2 0 003.53 21h16.94a2 2 0 001.72-3.44l-8.48-14.7a2 2 0 00-3.46 0z"/></svg>
-      No website can see which Google, Microsoft, or Apple account you're actually signed into. That's a privacy boundary browsers enforce on purpose — this is a best-guess from public signals only.
+      <span>Each provider requires its own registered app (a Client ID) before it will talk to this page — that's a security boundary, not something this page can bypass. Add your own credentials in Setup below to run a real test. Without one, that provider's button stays disabled and honest about why.</span>
     </div>
   </div>
 
-  <div class="scan-panel">
-    <div class="scan-strip" id="scanStrip">
-      <div class="sweep"></div>
-      <div class="label" id="scanLabel">Reading browser signals…</div>
-    </div>
-    <div class="readout" id="readout"></div>
+  <div class="section-title"><span class="n">01</span> Environment check</div>
+  <div class="env-grid" id="envGrid"></div>
+  <div class="popup-test-row">
+    <button class="btn-ghost" id="popupTestBtn">Test popup support</button>
+    <span class="popup-result" id="popupResult">Popups are only testable from a real click — try it.</span>
   </div>
 
-  <div class="section-title">Ecosystem match</div>
-  <div class="cards" id="cards"></div>
+  <div class="section-title"><span class="n">02</span> Setup</div>
+  <details class="setup" id="setupDetails">
+    <summary>Add your own OAuth credentials to enable real sign-in tests <span class="arrow">›</span></summary>
+    <div class="setup-body">
+      <p>Each field below is stored only in this browser's local storage — nothing is sent anywhere except directly to Google, Microsoft, or Apple when you click their sign-in button. You'll need a real app registered with each provider, using <strong id="originLabel">this page's exact address</strong> as the allowed origin / redirect.</p>
+
+      <div class="setup-provider">
+        <h3><span class="swatch" style="background:var(--google)"></span>Google</h3>
+        <div class="field-row">
+          <div class="field">
+            <label for="googleClientId">OAuth Client ID</label>
+            <input id="googleClientId" placeholder="xxxxxxxx.apps.googleusercontent.com">
+          </div>
+        </div>
+        <div class="field-note">From <a class="link" href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener">Google Cloud Console → Credentials</a>. Add this page's address under "Authorized JavaScript origins" (must be http/https, not a local file).</div>
+      </div>
+
+      <div class="setup-provider">
+        <h3><span class="swatch" style="background:var(--microsoft)"></span>Microsoft</h3>
+        <div class="field-row">
+          <div class="field">
+            <label for="msClientId">Application (client) ID</label>
+            <input id="msClientId" placeholder="00000000-0000-0000-0000-000000000000">
+          </div>
+          <div class="field">
+            <label for="msTenant">Tenant</label>
+            <input id="msTenant" placeholder="common">
+          </div>
+        </div>
+        <div class="field-note">From <a class="link" href="https://entra.microsoft.com" target="_blank" rel="noopener">Microsoft Entra admin center → App registrations</a>. Add this page's address as a "Single-page application" redirect URI. Leave tenant as "common" to accept any Microsoft account.</div>
+      </div>
+
+      <div class="setup-provider">
+        <h3><span class="swatch" style="background:var(--apple)"></span>Apple</h3>
+        <div class="field-row">
+          <div class="field">
+            <label for="appleClientId">Services ID</label>
+            <input id="appleClientId" placeholder="com.yourdomain.web">
+          </div>
+          <div class="field">
+            <label for="appleRedirectUri">Redirect URI</label>
+            <input id="appleRedirectUri" placeholder="https://yourdomain.com/">
+          </div>
+        </div>
+        <div class="field-note">From <a class="link" href="https://developer.apple.com/account/resources/identifiers/list/serviceId" target="_blank" rel="noopener">Apple Developer → Identifiers → Services IDs</a>. Apple additionally requires domain verification, so this one only succeeds on a real verified domain, never on a local file.</div>
+      </div>
+
+      <div class="save-row">
+        <button class="btn-primary" id="saveConfigBtn">Save configuration</button>
+        <span class="save-status" id="saveStatus">Saved ✓</span>
+      </div>
+    </div>
+  </details>
+
+  <div class="section-title"><span class="n">03</span> Try signing in</div>
+  <div class="cards" id="cards">
+
+    <div class="card" style="--accent:var(--google)">
+      <div class="card-top">
+        <div class="card-name"><span class="swatch"></span>Google</div>
+        <div class="card-badge" id="googleBadge">Not configured</div>
+      </div>
+      <p class="card-desc">Renders Google's real sign-in button and waits for an actual credential back from Google.</p>
+      <div class="card-action">
+        <div id="googleBtnContainer"></div>
+        <button class="provider-btn" id="googleFallbackBtn" style="display:none" disabled>Add a Client ID in Setup first</button>
+      </div>
+      <div class="result-box" id="googleResult"></div>
+    </div>
+
+    <div class="card" style="--accent:var(--microsoft)">
+      <div class="card-top">
+        <div class="card-name"><span class="swatch"></span>Microsoft</div>
+        <div class="card-badge" id="msBadge">Not configured</div>
+      </div>
+      <p class="card-desc">Opens a real Microsoft login popup via MSAL.js and reports the signed-in account.</p>
+      <div class="card-action">
+        <button class="provider-btn" id="msSignInBtn" disabled>Add a Client ID in Setup first</button>
+      </div>
+      <div class="result-box" id="msResult"></div>
+    </div>
+
+    <div class="card" style="--accent:var(--apple)">
+      <div class="card-top">
+        <div class="card-name"><span class="swatch"></span>Apple</div>
+        <div class="card-badge" id="appleBadge">Not configured</div>
+      </div>
+      <p class="card-desc">Opens Apple's real Sign in with Apple popup and reports the result.</p>
+      <div class="card-action">
+        <button class="provider-btn" id="appleSignInBtn" disabled>Add a Services ID in Setup first</button>
+      </div>
+      <div class="result-box" id="appleResult"></div>
+    </div>
+
+  </div>
 
   <div class="explainer">
-    <h2>Why we can't just check the actual account</h2>
-    <p>Browsers deliberately don't expose "which account is signed in" to arbitrary websites. If they did, any page could quietly work out your identity, your employer, or your device history without asking. What a site <em>can</em> see is public metadata: the user agent string, screen and touch capabilities, timezone, and language — none of which touches your accounts.</p>
+    <h2>What "can log in" really depends on</h2>
+    <p>A website can never spontaneously see that you're signed into a Google, Microsoft, or Apple account elsewhere — that would be a serious privacy leak. What it <em>can</em> do is ask, through each provider's real sign-in flow, and get a real yes-or-no answer. Whether that flow succeeds here depends on a few things stacking up correctly:</p>
     <ul>
-      <li><strong>Real confirmation requires your consent.</strong> The only trustworthy way to know is an actual sign-in flow — "Sign in with Google," a Microsoft work/school login, or Sign in with Apple — where you explicitly authorize the site.</li>
-      <li><strong>The inference above is circumstantial.</strong> A Chrome browser on Windows doesn't mean a Google account any more than Safari on a work Mac means a personal Apple ID.</li>
-      <li><strong>FedCM and similar browser APIs</strong> let a signed-in state be shared with a site, but only after the browser shows you a native, unspoofable prompt asking permission first.</li>
+      <li><strong>An app registration exists.</strong> Every provider requires a Client ID tied to a specific domain before it will show a login prompt to that page at all.</li>
+      <li><strong>The page is served securely.</strong> All three providers require a real https address (or localhost) — opening this file directly from disk will block every one of them.</li>
+      <li><strong>Popups and cookies are allowed.</strong> Sign-in windows are popups; if a browser or extension blocks popups or first-party cookies, the flow can't complete even with valid credentials.</li>
+      <li><strong>Third-party cookie policy varies by browser.</strong> As of 2026, Safari and Firefox block third-party cookies by default, while Chrome still allows them but is shifting toward letting people choose. This mostly affects silent "stay signed in" checks, not the popup flows this page uses, which rely on first-party cookies during the popup itself.</li>
     </ul>
-    <div class="signin-row">
-      <button class="signin-btn" disabled title="Requires a real OAuth client ID — see note below">Sign in with Google</button>
-      <button class="signin-btn" disabled title="Requires a registered Azure AD app — see note below">Sign in with Microsoft</button>
-      <button class="signin-btn" disabled title="Requires an Apple Developer Services ID — see note below">Sign in with Apple</button>
-    </div>
-    <div class="signin-note">These are disabled on purpose — wiring them up for real would need your own app credentials from <a class="link" href="https://developers.google.com/identity" target="_blank" rel="noopener">Google Identity</a>, <a class="link" href="https://learn.microsoft.com/en-us/entra/identity-platform/" target="_blank" rel="noopener">Microsoft Entra</a>, and <a class="link" href="https://developer.apple.com/sign-in-with-apple/" target="_blank" rel="noopener">Sign in with Apple</a>, plus a backend to verify the token. Happy to help wire real sign-in up if you have those credentials.</div>
   </div>
 
   <footer>
-    <span>Runs entirely in your browser — nothing here is sent anywhere.</span>
+    <span>Runs entirely in your browser — credentials you enter never leave this device except to the provider you click.</span>
     <span id="footerUA">—</span>
   </footer>
 
@@ -418,6 +278,7 @@
 
 <script>
 (function(){
+  // ---------- clock ----------
   var tsEl = document.getElementById('timestamp');
   function updateTime(){
     var d = new Date();
@@ -426,130 +287,326 @@
   updateTime();
   setInterval(updateTime, 1000);
 
-  // ---------- signal collection ----------
   var ua = navigator.userAgent || '';
-  var platform = navigator.platform || '';
-  var vendor = navigator.vendor || '';
-  var maxTouch = navigator.maxTouchPoints || 0;
-  var lang = navigator.language || '';
-  var mobile = /Mobi|Android/i.test(ua) || maxTouch > 2 && /Mac/.test(platform); // iPadOS reports Mac platform
-  var tz = 'unknown';
-  try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone; } catch(e){}
-
-  function detectBrowser(){
-    if (/Edg\//.test(ua)) return 'Microsoft Edge';
-    if (/OPR\//.test(ua) || /Opera/.test(ua)) return 'Opera';
-    if (/SamsungBrowser/.test(ua)) return 'Samsung Internet';
-    if (/Firefox\//.test(ua)) return 'Firefox';
-    if (/CriOS/.test(ua)) return 'Chrome (iOS)';
-    if (/FxiOS/.test(ua)) return 'Firefox (iOS)';
-    if (/Chrome\//.test(ua) && /Google Inc/.test(vendor)) return 'Chrome';
-    if (/Safari\//.test(ua) && /Apple Computer/.test(vendor)) return 'Safari';
-    return 'Unknown browser';
-  }
-
-  function detectOS(){
-    if (/Windows NT/.test(ua)) return 'Windows';
-    if (/iPhone|iPad|iPod/.test(ua)) return 'iOS';
-    if (/Mac OS X/.test(ua) && maxTouch > 2) return 'iPadOS';
-    if (/Mac OS X/.test(ua)) return 'macOS';
-    if (/Android/.test(ua)) return 'Android';
-    if (/CrOS/.test(ua)) return 'ChromeOS';
-    if (/Linux/.test(ua)) return 'Linux';
-    return 'Unknown OS';
-  }
-
-  var browser = detectBrowser();
-  var os = detectOS();
-  var deviceType = mobile ? 'Mobile / touch' : 'Desktop';
-
-  // ---------- render readout ----------
-  var rows = [
-    ['Browser', browser],
-    ['Operating system', os],
-    ['Device type', deviceType],
-    ['Touch points', String(maxTouch)],
-    ['Language', lang],
-    ['Timezone', tz]
-  ];
-  var readoutEl = document.getElementById('readout');
-  readoutEl.innerHTML = rows.map(function(r){
-    return '<div class="row"><span class="k">' + r[0] + '</span><span class="v">' + r[1] + '</span></div>';
-  }).join('');
-
   document.getElementById('footerUA').textContent = ua.length > 70 ? ua.slice(0,70) + '…' : ua;
+  document.getElementById('originLabel').textContent = window.location.origin + window.location.pathname;
 
-  // ---------- scoring ----------
-  var scores = { google: 8, microsoft: 8, apple: 8 }; // small baseline so nothing reads as zero confidence
-  var signals = { google: [], microsoft: [], apple: [] };
-
-  function bump(key, amount, why){
-    scores[key] += amount;
-    signals[key].push(why);
+  // ---------- environment checks ----------
+  function envChecks(){
+    return [
+      {
+        key: 'secure',
+        label: 'Secure context',
+        pass: window.isSecureContext,
+        detail: window.isSecureContext ? window.location.protocol : window.location.protocol + ' (not secure)'
+      },
+      {
+        key: 'cookies',
+        label: 'Cookies enabled',
+        pass: navigator.cookieEnabled,
+        detail: navigator.cookieEnabled ? 'enabled' : 'disabled in browser settings'
+      },
+      {
+        key: 'storageAccess',
+        label: 'Storage Access API',
+        pass: typeof document.hasStorageAccess === 'function',
+        detail: typeof document.hasStorageAccess === 'function' ? 'supported' : 'not supported in this browser'
+      },
+      {
+        key: 'fedcm',
+        label: 'FedCM (Google One Tap path)',
+        pass: 'IdentityCredential' in window,
+        detail: ('IdentityCredential' in window) ? 'supported' : 'not supported — falls back to popup'
+      }
+    ];
   }
 
-  if (browser === 'Chrome') { bump('google', 45, 'Chrome browser'); }
-  if (browser === 'Chrome (iOS)') { bump('google', 30, 'Chrome on iOS'); bump('apple', 15, 'iOS platform'); }
-  if (os === 'ChromeOS') { bump('google', 40, 'ChromeOS'); }
-  if (os === 'Android') { bump('google', 35, 'Android OS'); }
+  function renderEnv(){
+    var grid = document.getElementById('envGrid');
+    grid.innerHTML = envChecks().map(function(c){
+      var cls = c.pass ? 'pass' : 'fail';
+      var icon = c.pass ? '✓' : '✕';
+      return (
+        '<div class="env-item">' +
+          '<div class="env-icon ' + cls + '">' + icon + '</div>' +
+          '<div class="env-text"><span class="k">' + c.label + '</span><span class="v">' + c.detail + '</span></div>' +
+        '</div>'
+      );
+    }).join('');
+  }
+  renderEnv();
 
-  if (browser === 'Microsoft Edge') { bump('microsoft', 45, 'Edge browser'); }
-  if (os === 'Windows') { bump('microsoft', 30, 'Windows OS'); }
+  document.getElementById('popupTestBtn').addEventListener('click', function(){
+    var resultEl = document.getElementById('popupResult');
+    var w = window.open('about:blank', 'popupTest', 'width=100,height=100');
+    if (!w || w.closed) {
+      resultEl.textContent = 'Blocked — this browser (or an extension) is preventing popups on this page.';
+      resultEl.style.color = 'var(--red)';
+    } else {
+      w.close();
+      resultEl.textContent = 'Allowed — popups can open from this page.';
+      resultEl.style.color = 'var(--green)';
+    }
+  });
 
-  if (browser === 'Safari') { bump('apple', 45, 'Safari browser'); }
-  if (os === 'macOS') { bump('apple', 35, 'macOS'); }
-  if (os === 'iOS') { bump('apple', 40, 'iOS'); }
-  if (os === 'iPadOS') { bump('apple', 40, 'iPadOS'); }
+  // ---------- config storage ----------
+  var KEYS = {
+    googleClientId: 'sc_google_client_id',
+    msClientId: 'sc_ms_client_id',
+    msTenant: 'sc_ms_tenant',
+    appleClientId: 'sc_apple_client_id',
+    appleRedirectUri: 'sc_apple_redirect_uri'
+  };
 
-  if (browser === 'Firefox' || browser === 'Firefox (iOS)') {
-    signals.google.push('No strong signal (Firefox is ecosystem-neutral)');
-    signals.microsoft.push('No strong signal (Firefox is ecosystem-neutral)');
-    signals.apple.push(os.indexOf('OS') > -1 && os !== 'ChromeOS' ? 'Running on an Apple OS, browser itself is neutral' : 'No strong signal');
+  function loadConfig(){
+    var cfg = {};
+    try{
+      cfg.googleClientId = localStorage.getItem(KEYS.googleClientId) || '';
+      cfg.msClientId = localStorage.getItem(KEYS.msClientId) || '';
+      cfg.msTenant = localStorage.getItem(KEYS.msTenant) || 'common';
+      cfg.appleClientId = localStorage.getItem(KEYS.appleClientId) || '';
+      cfg.appleRedirectUri = localStorage.getItem(KEYS.appleRedirectUri) || '';
+    } catch(e){
+      cfg = { googleClientId:'', msClientId:'', msTenant:'common', appleClientId:'', appleRedirectUri:'' };
+    }
+    return cfg;
   }
 
-  // normalize to 0-100 display scale
-  var maxScore = Math.max(scores.google, scores.microsoft, scores.apple, 1);
-  var display = {
-    google: Math.min(100, Math.round(scores.google / maxScore * 92)),
-    microsoft: Math.min(100, Math.round(scores.microsoft / maxScore * 92)),
-    apple: Math.min(100, Math.round(scores.apple / maxScore * 92))
-  };
+  function saveConfigFromInputs(){
+    var cfg = {
+      googleClientId: document.getElementById('googleClientId').value.trim(),
+      msClientId: document.getElementById('msClientId').value.trim(),
+      msTenant: document.getElementById('msTenant').value.trim() || 'common',
+      appleClientId: document.getElementById('appleClientId').value.trim(),
+      appleRedirectUri: document.getElementById('appleRedirectUri').value.trim()
+    };
+    try{
+      localStorage.setItem(KEYS.googleClientId, cfg.googleClientId);
+      localStorage.setItem(KEYS.msClientId, cfg.msClientId);
+      localStorage.setItem(KEYS.msTenant, cfg.msTenant);
+      localStorage.setItem(KEYS.appleClientId, cfg.appleClientId);
+      localStorage.setItem(KEYS.appleRedirectUri, cfg.appleRedirectUri);
+    } catch(e){}
+    return cfg;
+  }
 
-  var leaderKey = Object.keys(scores).sort(function(a,b){ return scores[b]-scores[a]; })[0];
+  function populateInputs(cfg){
+    document.getElementById('googleClientId').value = cfg.googleClientId;
+    document.getElementById('msClientId').value = cfg.msClientId;
+    document.getElementById('msTenant').value = cfg.msTenant;
+    document.getElementById('appleClientId').value = cfg.appleClientId;
+    document.getElementById('appleRedirectUri').value = cfg.appleRedirectUri;
+  }
 
-  var meta = {
-    google: { name: 'Google', accent: 'var(--google)', note: 'Chrome, Android, and ChromeOS all funnel back to a Google account for sync, so this combination is the strongest tell.' },
-    microsoft: { name: 'Microsoft', accent: 'var(--microsoft)', note: 'Edge and Windows both nudge toward a Microsoft account, especially if Windows sync or a work/school login is active.' },
-    apple: { name: 'Apple', accent: 'var(--apple)', note: "Safari plus macOS or iOS points at an Apple ID, since Safari is bundled with Apple's own platforms." }
-  };
-
-  var cardsEl = document.getElementById('cards');
-  cardsEl.innerHTML = ['google','microsoft','apple'].map(function(key){
-    var isLeader = key === leaderKey;
-    var sigList = signals[key].length ? signals[key] : ['No matching signals found'];
-    return (
-      '<div class="card' + (isLeader ? ' leader' : '') + '" style="--accent:' + meta[key].accent + '">' +
-        '<div class="card-top">' +
-          '<div class="card-name"><span class="swatch"></span>' + meta[key].name + '</div>' +
-          '<div class="card-badge">' + (isLeader ? 'Best match' : 'Match score') + '</div>' +
-        '</div>' +
-        '<div class="meter"><div class="meter-fill" data-target="' + display[key] + '"></div></div>' +
-        '<p class="card-note">' + meta[key].note + '</p>' +
-        '<div class="card-signals">' + sigList.map(function(s){ return '<span>' + s + '</span>'; }).join('') + '</div>' +
-      '</div>'
-    );
-  }).join('');
-
-  // ---------- finish scan animation ----------
-  setTimeout(function(){
-    document.getElementById('scanStrip').classList.add('done');
-    document.getElementById('scanLabel').textContent = 'Signals read — ' + browser + ' on ' + os;
-    document.querySelectorAll('.meter-fill').forEach(function(el){
-      requestAnimationFrame(function(){
-        el.style.width = el.getAttribute('data-target') + '%';
-      });
+  // ---------- helpers ----------
+  function loadScript(src){
+    return new Promise(function(resolve, reject){
+      var existing = document.querySelector('script[data-src="' + src + '"]');
+      if (existing){
+        if (existing.dataset.loaded === '1') { resolve(); } else {
+          existing.addEventListener('load', function(){ resolve(); });
+          existing.addEventListener('error', function(){ reject(new Error('Failed to load ' + src)); });
+        }
+        return;
+      }
+      var s = document.createElement('script');
+      s.src = src;
+      s.async = true;
+      s.dataset.src = src;
+      s.onload = function(){ s.dataset.loaded = '1'; resolve(); };
+      s.onerror = function(){ reject(new Error('Failed to load ' + src)); };
+      document.head.appendChild(s);
     });
-  }, 900);
+  }
+
+  function decodeJwt(token){
+    var parts = token.split('.');
+    if (parts.length < 2) throw new Error('Not a valid token');
+    var b64 = parts[1].replace(/-/g,'+').replace(/_/g,'/');
+    while (b64.length % 4) { b64 += '='; }
+    var json = decodeURIComponent(atob(b64).split('').map(function(c){
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    return JSON.parse(json);
+  }
+
+  function describeError(e){
+    var msg = (e && (e.errorMessage || e.message || e.error || e.error_description)) || String(e || 'Unknown error');
+    if (/popup_closed|user_cancelled|cancelled|popup window is null|popup_window_error/i.test(msg)) {
+      return 'The sign-in popup was closed or blocked before finishing.';
+    }
+    if (/redirect_uri_mismatch|redirect uri|redirectUri/i.test(msg)) {
+      return "This page's address isn't registered as an allowed redirect for this app yet.";
+    }
+    if (/invalid_client|unauthorized_client|AADSTS700016|origin_mismatch/i.test(msg)) {
+      return "The client ID isn't recognized for this page's address — double check Setup.";
+    }
+    return msg;
+  }
+
+  function showResult(provider, ok, message, raw){
+    var el = document.getElementById(provider + 'Result');
+    el.className = 'result-box show ' + (ok ? 'ok' : 'fail');
+    var html = message;
+    if (raw) {
+      html += '<details><summary>Raw response</summary><pre>' + JSON.stringify(raw, null, 2).replace(/</g,'&lt;') + '</pre></details>';
+    }
+    el.innerHTML = html;
+  }
+
+  function showPending(provider, message){
+    var el = document.getElementById(provider + 'Result');
+    el.className = 'result-box show pending';
+    el.innerHTML = message;
+  }
+
+  // ---------- Google ----------
+  function setupGoogle(cfg){
+    var badge = document.getElementById('googleBadge');
+    var fallback = document.getElementById('googleFallbackBtn');
+    var container = document.getElementById('googleBtnContainer');
+    if (!cfg.googleClientId) {
+      badge.textContent = 'Not configured';
+      badge.classList.remove('configured');
+      container.innerHTML = '';
+      fallback.style.display = 'flex';
+      return;
+    }
+    badge.textContent = 'Configured';
+    badge.classList.add('configured');
+    fallback.style.display = 'none';
+    showPending('google', 'Loading Google sign-in…');
+    loadScript('https://accounts.google.com/gsi/client').then(function(){
+      google.accounts.id.initialize({
+        client_id: cfg.googleClientId,
+        callback: function(response){
+          try{
+            var payload = decodeJwt(response.credential);
+            showResult('google', true, 'Signed in as ' + (payload.email || payload.name || 'unknown account') + '.', payload);
+          } catch(e){
+            showResult('google', false, 'Got a response back but could not read it: ' + e.message);
+          }
+        },
+        ux_mode: 'popup'
+      });
+      container.innerHTML = '';
+      google.accounts.id.renderButton(container, { theme: 'filled_black', size: 'large', shape: 'pill', text: 'signin_with', width: 240 });
+      document.getElementById('googleResult').className = 'result-box';
+    }).catch(function(e){
+      showResult('google', false, 'Could not load Google\u2019s sign-in library: ' + e.message);
+    });
+  }
+
+  // ---------- Microsoft ----------
+  var msalInstance = null;
+  var msalReadyPromise = null;
+
+  function ensureMsal(cfg){
+    if (msalReadyPromise) return msalReadyPromise;
+    msalReadyPromise = loadScript('https://cdn.jsdelivr.net/npm/@azure/msal-browser@3/dist/msal-browser.min.js').then(function(){
+      msalInstance = new msal.PublicClientApplication({
+        auth: {
+          clientId: cfg.msClientId,
+          authority: 'https://login.microsoftonline.com/' + (cfg.msTenant || 'common'),
+          redirectUri: window.location.origin + window.location.pathname
+        }
+      });
+      return msalInstance.initialize();
+    });
+    return msalReadyPromise;
+  }
+
+  function setupMicrosoft(cfg){
+    var badge = document.getElementById('msBadge');
+    var btn = document.getElementById('msSignInBtn');
+    if (!cfg.msClientId) {
+      badge.textContent = 'Not configured';
+      badge.classList.remove('configured');
+      btn.disabled = true;
+      btn.textContent = 'Add a Client ID in Setup first';
+      return;
+    }
+    badge.textContent = 'Configured';
+    badge.classList.add('configured');
+    btn.disabled = false;
+    btn.textContent = 'Sign in with Microsoft';
+  }
+
+  document.getElementById('msSignInBtn').addEventListener('click', function(){
+    var cfg = loadConfig();
+    if (!cfg.msClientId) { showResult('microsoft', false, 'Add a Client ID in Setup first.'); return; }
+    showPending('microsoft', 'Opening Microsoft sign-in…');
+    ensureMsal(cfg).then(function(){
+      return msalInstance.loginPopup({ scopes: ['openid','profile'] });
+    }).then(function(result){
+      var who = (result.account && result.account.username) || 'unknown account';
+      showResult('microsoft', true, 'Signed in as ' + who + '.', result.account);
+    }).catch(function(e){
+      showResult('microsoft', false, describeError(e));
+    });
+  });
+
+  // ---------- Apple ----------
+  function setupApple(cfg){
+    var badge = document.getElementById('appleBadge');
+    var btn = document.getElementById('appleSignInBtn');
+    if (!cfg.appleClientId || !cfg.appleRedirectUri) {
+      badge.textContent = 'Not configured';
+      badge.classList.remove('configured');
+      btn.disabled = true;
+      btn.textContent = 'Add a Services ID in Setup first';
+      return;
+    }
+    badge.textContent = 'Configured';
+    badge.classList.add('configured');
+    btn.disabled = false;
+    btn.textContent = 'Sign in with Apple';
+  }
+
+  document.getElementById('appleSignInBtn').addEventListener('click', function(){
+    var cfg = loadConfig();
+    if (!cfg.appleClientId || !cfg.appleRedirectUri) { showResult('apple', false, 'Add a Services ID and redirect URI in Setup first.'); return; }
+    showPending('apple', 'Opening Apple sign-in…');
+    loadScript('https://appleid.cdn-apple.com/appleid/1/en_US/appleid.auth.js').then(function(){
+      AppleID.auth.init({
+        clientId: cfg.appleClientId,
+        scope: 'name email',
+        redirectURI: cfg.appleRedirectUri,
+        usePopup: true
+      });
+      return AppleID.auth.signIn();
+    }).then(function(response){
+      var label = 'Signed in.';
+      try{
+        if (response && response.authorization && response.authorization.id_token) {
+          var payload = decodeJwt(response.authorization.id_token);
+          label = 'Signed in as ' + (payload.email || payload.sub) + '.';
+        }
+      } catch(e){}
+      showResult('apple', true, label, response);
+    }).catch(function(e){
+      showResult('apple', false, describeError(e));
+    });
+  });
+
+  // ---------- wire up setup panel ----------
+  var initialCfg = loadConfig();
+  populateInputs(initialCfg);
+  setupGoogle(initialCfg);
+  setupMicrosoft(initialCfg);
+  setupApple(initialCfg);
+
+  document.getElementById('saveConfigBtn').addEventListener('click', function(){
+    var cfg = saveConfigFromInputs();
+    setupGoogle(cfg);
+    setupMicrosoft(cfg);
+    setupApple(cfg);
+    msalReadyPromise = null; // force re-init with new credentials
+    var status = document.getElementById('saveStatus');
+    status.classList.add('show');
+    setTimeout(function(){ status.classList.remove('show'); }, 2000);
+  });
+
 })();
 </script>
 </body>
