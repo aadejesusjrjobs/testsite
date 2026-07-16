@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Login Detector</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f7f6;
+            margin: 0;
+        }
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+        h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .status {
+            font-size: 18px;
+            font-weight: bold;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        .checking {
+            background-color: #e2e8f0;
+            color: #4a5568;
+        }
+        .logged-in {
+            background-color: #c6f6d5;
+            color: #22543d;
+        }
+        .logged-out {
+            background-color: #fed7d7;
+            color: #742a2a;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1>Google Account Detector</h1>
+        <p>Checking your Google login status automatically...</p>
+        <div id="status-box" class="status checking">Detecting...</div>
+    </div>
+
+    <script>
+        function checkGoogleLogin() {
+            const statusBox = document.getElementById('status-box');
+            
+            // We use a Google URL that behaves differently depending on auth status.
+            // If logged in, this returns a 200/image. If logged out, it redirects to a login screen.
+            const img = new Image();
+            
+            // Set a timeout in case the image request hangs
+            const timeout = setTimeout(() => {
+                img.onload = null;
+                img.onerror = null;
+                updateStatus(false);
+            }, 3000);
+
+            img.onload = function() {
+                clearTimeout(timeout);
+                updateStatus(true);
+            };
+
+            img.onerror = function() {
+                clearTimeout(timeout);
+                updateStatus(false);
+            };
+
+            // This specific Google customization URL is ideal for checking auth status via image tags
+            img.src = "https://accounts.google.com/CheckCookie?continue=https%3A%2F%2Fwww.google.com%2Fintl%2Fen%2Fimages%2Flogos%2Flogo_gplus_gif.gif&cookieName=GAPS";
+        }
+
+        function updateStatus(isLoggedIn) {
+            const statusBox = document.getElementById('status-box');
+            if (isLoggedIn) {
+                statusBox.textContent = "🟢 Logged Into Google";
+                statusBox.className = "status logged-in";
+            } else {
+                statusBox.textContent = "🔴 Not Logged Into Google";
+                statusBox.className = "status logged-out";
+            }
+        }
+
+        // Run the check automatically when the page loads
+        window.onload = checkGoogleLogin;
+    </script>
+
+</body>
+</html>
