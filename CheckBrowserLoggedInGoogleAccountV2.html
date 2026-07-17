@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Session Detector</title>
+    <!-- Google Identity Services SDK -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-color: #202124;
+            --text-muted: #5f6368;
+            --border-color: #dadce0;
+            --accent-color: #1a73e8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 32px;
+            width: 100%;
+            max-width: 480px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        p {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
+
+        /* Status Indicator Box */
+        .status-box {
+            padding: 16px;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 15px;
+            margin-bottom: 24px;
+            background-color: #e8f0fe;
+            color: var(--accent-color);
+            border: 1px solid #d2e3fc;
+        }
+
+        .status-box.checking {
+            background-color: #f1f3f4;
+            color: #5f6368;
+            border-color: #e8eaed;
+        }
+
+        .status-box.detected {
+            background-color: #e6f4ea;
+            color: #137333;
+            border-color: #ceead6;
+        }
+
+        .status-box.not-detected {
+            background-color: #fce8e6;
+            color: #c5221f;
+            border-color: #fad2cf;
+        }
+
+        /* Responsive Fallback Button Area */
+        .fallback-zone {
+            display: flex;
+            justify-content: center;
+            margin-top: 16px;
+            min-height: 40px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 480px) {
+            body {
+                align-items: flex-start;
+                padding-top: 40px;
+            }
+            .container {
+                border: none;
+                box-shadow: none;
+                background: transparent;
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Session Detector</h1>
+        <p>Checking if this browser has an active Google Account session...</p>
+        
+        <div id="statusIndicator" class="status-box checking">
+            Initializing Google Client...
+        </div>
+
+        <div id="fallbackZone" class="fallback-zone hidden">
+            <!-- Google Button renders here if active auto-select isn't possible -->
+            <div class="g_id_signin" data-type="standard"></div>
+        </div>
+    </div>
+
+    <script>
+        // REPLACE THIS with your actual Google Cloud Console Client ID
+        const GOOGLE_CLIENT_ID = "YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com";
+
+        const statusIndicator = document.getElementById('statusIndicator');
+        const fallbackZone = document.getElementById('fallbackZone');
+
+        window.onload = function () {
+            if (GOOGLE_CLIENT_ID === "YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com") {
+                statusIndicator.className = "status-box not-detected";
+                statusIndicator.innerText = "Configuration Error: Please insert your Google Client ID into the script tag.";
+                return;
+            }
+
+            statusIndicator.innerText = "Probing browser for active Google session...";
+
+            // Initialize the GIS Framework
+            google.accounts.id.initialize({
+                client_id: GOOGLE_CLIENT_ID,
+                callback: handleCredentialResponse,
+                auto_select: true // Attempt silent retrieval if previously authorized
+            });
+
+            // Prompt the native One Tap overlay
+            google.accounts.id.prompt((notification) => {
+                if (notification.isNotDisplayed()) {
+                    const reason = notification.getNotDisplayedReason();
+                    console.log("Prompt not displayed reason:", reason);
+                    
+                    // "suppressed_by_user" or "opt_out" usually means no session or user dismissed it globally
+                    if (reason === "no_cookie" || reason === "suppressed_by_user") {
+                        updateStatus(false, "No active Google session detected in this browser.");
+                    } else {
+                        updateStatus(false, `Session check skipped. Reason: ${reason.replace(/_/g, ' ')}`);
+                    }
+                } else if (notification.isSkippedMoment()) {
+                    updateStatus(false, "User dismissed the Google session prompt.");
+                } else if (notification.isDisplayed()) {
+                    // An active session was definitely found because Google is presenting the profile UI
+                    updateStatus(true, "Active Google session detected! (Prompt displayed)");
+                }
+            });
+
+            // Render standard button as a backup choice
+            google.accounts.id.renderButton(
+                document.querySelector('.g_id_signin'),
+                { theme: "outline", size: "large", width: "280" }
+            );
+        };
+
+        // Triggered if a valid, active session drops credential tokens
+        function handleCredentialResponse(response) {
+            console.log("JWT Token Received:", response.credential);
+            updateStatus(true, "Active Google Session Verified & Authenticated!");
+        }
+
+        function updateStatus(isDetected, message) {
+            statusIndicator.innerText = message;
+            if (isDetected) {
+                statusIndicator.className = "status-box detected";
+                fallbackZone.classList.add('hidden');
+            } else {
+                statusIndicator.className = "status-box not-detected";
+                // Show standard button if passive detection fails so users can manually click
+                fallbackZone.classList.remove('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
