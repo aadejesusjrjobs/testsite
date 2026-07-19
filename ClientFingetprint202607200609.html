@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Client Identification Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#D9DED9;
+    --paper-2:#CBD2CA;
+    --ink:#1E2A26;
+    --ink-soft:#3F4E48;
+    --stamp:#A23B2E;
+    --stamp-soft:#c15a4a;
+    --line:#9AA69C;
+    --ok:#3E6B52;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      repeating-linear-gradient(0deg, rgba(30,42,38,0.025) 0px, rgba(30,42,38,0.025) 1px, transparent 1px, transparent 3px),
+      var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Mono', monospace;
+    min-height:100vh;
+    padding: 28px 18px 80px;
+  }
+  a{color:var(--ink);}
+
+  .sheet{
+    max-width: 980px;
+    margin: 0 auto;
+    border: 1.5px solid var(--ink);
+    background: var(--paper);
+    position: relative;
+  }
+  .sheet::before{
+    content:"";
+    position:absolute; inset:6px;
+    border: 1px solid var(--line);
+    pointer-events:none;
+  }
+
+  header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap: 20px;
+    padding: 26px 30px 20px;
+    border-bottom: 1.5px solid var(--ink);
+  }
+  .title-block{max-width: 560px;}
+  .eyebrow{
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin: 0 0 6px;
+  }
+  h1{
+    font-family:'Special Elite', monospace;
+    font-size: clamp(26px, 4vw, 38px);
+    line-height: 1.1;
+    margin: 0 0 10px;
+    letter-spacing: 0.01em;
+  }
+  .subhead{
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .case-meta{
+    text-align:right;
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    white-space: nowrap;
+    padding-top: 2px;
+  }
+  .case-meta .id{
+    display:block;
+    font-family:'Special Elite', monospace;
+    font-size: 18px;
+    color: var(--stamp);
+    margin-bottom: 4px;
+    letter-spacing: 0.03em;
+  }
+  .case-meta div{margin-top:2px;}
+
+  .stampzone{
+    display:flex;
+    justify-content:center;
+    padding: 22px 30px 6px;
+  }
+  .print-wrap{
+    display:flex;
+    align-items:center;
+    gap: 22px;
+    flex-wrap: wrap;
+    justify-content:center;
+  }
+  canvas#printCanvas{
+    width: 160px; height:160px;
+    filter: sepia(15%) saturate(140%);
+  }
+  .print-caption{
+    font-size: 11px;
+    color: var(--ink-soft);
+    max-width: 280px;
+    line-height: 1.6;
+  }
+  .print-caption b{color:var(--stamp); font-weight:600;}
+
+  .grid{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+    padding: 10px 30px 30px;
+  }
+  @media (max-width: 700px){
+    .grid{grid-template-columns: 1fr;}
+    header{flex-direction:column;}
+    .case-meta{text-align:left;}
+  }
+
+  .card{
+    border: 1px solid var(--line);
+    margin: 10px;
+    padding: 16px 18px 14px;
+    background: rgba(255,255,255,0.18);
+  }
+  .card h2{
+    font-family:'Special Elite', monospace;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 0 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed var(--line);
+    color: var(--ink);
+  }
+  .card h2 .tag{
+    color: var(--stamp);
+    margin-right: 6px;
+  }
+
+  dl{margin:0; display:grid; grid-template-columns: auto 1fr; gap: 6px 14px;}
+  dt{
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-soft);
+    white-space: nowrap;
+    padding-top: 1px;
+  }
+  dd{
+    margin:0;
+    font-size: 12.5px;
+    word-break: break-word;
+    color: var(--ink);
+  }
+  dd.mono-long{
+    font-size: 11px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+  .flag{
+    display:inline-block;
+    font-size: 10px;
+    padding: 1px 6px;
+    border: 1px solid currentColor;
+    border-radius: 2px;
+    margin-left: 6px;
+    vertical-align: 1px;
+  }
+  .flag.yes{color: var(--stamp);}
+  .flag.no{color: var(--ok);}
+
+  .fonts-list span{
+    display:inline-block;
+    font-size: 11px;
+    padding: 2px 7px;
+    margin: 2px 4px 0 0;
+    border: 1px solid var(--line);
+  }
+  .fonts-list span.detected{
+    border-color: var(--stamp);
+    color: var(--stamp);
+  }
+
+  footer{
+    border-top: 1.5px solid var(--ink);
+    padding: 16px 30px 22px;
+    font-size: 11px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    display:flex;
+    justify-content:space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  footer .stamp-mark{
+    font-family:'Special Elite', monospace;
+    color: var(--stamp-soft);
+    border: 1.5px solid var(--stamp-soft);
+    padding: 4px 10px;
+    transform: rotate(-3deg);
+    font-size: 12px;
+    white-space: nowrap;
+    height: fit-content;
+  }
+
+  @media (prefers-reduced-motion: no-preference){
+    .card{animation: rise 0.5s ease backwards;}
+    .card:nth-child(1){animation-delay:.02s;}
+    .card:nth-child(2){animation-delay:.06s;}
+    .card:nth-child(3){animation-delay:.1s;}
+    .card:nth-child(4){animation-delay:.14s;}
+    .card:nth-child(5){animation-delay:.18s;}
+    .card:nth-child(6){animation-delay:.22s;}
+    .card:nth-child(7){animation-delay:.26s;}
+    @keyframes rise{
+      from{opacity:0; transform:translateY(6px);}
+      to{opacity:1; transform:translateY(0);}
+    }
+  }
+
+  :focus-visible{outline: 2px solid var(--stamp); outline-offset: 2px;}
+</style>
+</head>
+<body>
+
+<div class="sheet">
+  <header>
+    <div class="title-block">
+      <p class="eyebrow">Client-side identification &mdash; local session only</p>
+      <h1>Device Fingerprint Report</h1>
+      <p class="subhead">A snapshot of the signals your browser exposes on this page load. Nothing here is sent anywhere &mdash; every value is read and displayed entirely in your browser.</p>
+    </div>
+    <div class="case-meta">
+      <span class="id" id="caseId">FP-????????</span>
+      <div id="caseTime">&mdash;</div>
+      <div>CONFIDENCE: <span id="caseConfidence">&mdash;</span></div>
+      <div>STATUS: <span style="color:var(--ok)">LOCAL ONLY</span></div>
+    </div>
+  </header>
+
+  <div class="stampzone">
+    <div class="print-wrap">
+      <canvas id="printCanvas" width="320" height="320"></canvas>
+      <p class="print-caption">This ridge pattern is generated purely for illustration &mdash; its shape is seeded from the visitor ID computed by <b>FingerprintJS (open source)</b> below, so a different browser/device will draw a <b>visibly different print</b>. It is not a real biometric fingerprint.</p>
+    </div>
+  </div>
+
+  <div class="grid">
+
+    <div class="card">
+      <h2><span class="tag">01</span>Platform</h2>
+      <dl>
+        <dt>Browser</dt><dd id="p-browser">&mdash;</dd>
+        <dt>Engine</dt><dd id="p-engine">&mdash;</dd>
+        <dt>OS</dt><dd id="p-os">&mdash;</dd>
+        <dt>Platform</dt><dd id="p-platform">&mdash;</dd>
+        <dt>Languages</dt><dd id="p-langs">&mdash;</dd>
+        <dt>User agent</dt><dd class="mono-long" id="p-ua">&mdash;</dd>
+      </dl>
+    </div>
+
+    <div class="card">
+      <h2><span class="tag">02</span>Display</h2>
+      <dl>
+        <dt>Resolution</dt><dd id="d-res">&mdash;</dd>
+        <dt>Available</dt><dd id="d-avail">&mdash;</dd>
+        <dt>Color depth</dt><dd id="d-color">&mdash;</dd>
+        <dt>Pixel ratio</dt><dd id="d-ratio">&mdash;</dd>
+        <dt>Orientation</dt><dd id="d-orient">&mdash;</dd>
+      </dl>
+    </div>
+
+    <div class="card">
+      <h2><span class="tag">03</span>Environment</h2>
+      <dl>
+        <dt>Timezone</dt><dd id="e-tz">&mdash;</dd>
+        <dt>UTC offset</dt><dd id="e-offset">&mdash;</dd>
+        <dt>Locale</dt><dd id="e-locale">&mdash;</dd>
+        <dt>Cookies</dt><dd id="e-cookies">&mdash;</dd>
+        <dt>Do Not Track</dt><dd id="e-dnt">&mdash;</dd>
+        <dt>Online</dt><dd id="e-online">&mdash;</dd>
+      </dl>
+    </div>
+
+    <div class="card">
+      <h2><span class="tag">04</span>Hardware</h2>
+      <dl>
+        <dt>CPU cores</dt><dd id="h-cores">&mdash;</dd>
+        <dt>Memory (approx)</dt><dd id="h-mem">&mdash;</dd>
+        <dt>Touch points</dt><dd id="h-touch">&mdash;</dd>
+        <dt>Input type</dt><dd id="h-input">&mdash;</dd>
+      </dl>
+    </div>
+
+    <div class="card">
+      <h2><span class="tag">05</span>Rendering</h2>
+      <dl>
+        <dt>Canvas hash</dt><dd id="r-canvas">&mdash;</dd>
+        <dt>WebGL vendor</dt><dd id="r-vendor">&mdash;</dd>
+        <dt>WebGL renderer</dt><dd class="mono-long" id="r-renderer">&mdash;</dd>
+      </dl>
+    </div>
+
+    <div class="card">
+      <h2><span class="tag">06</span>Network</h2>
+      <dl>
+        <dt>Connection</dt><dd id="n-type">&mdash;</dd>
+        <dt>Downlink</dt><dd id="n-downlink">&mdash;</dd>
+        <dt>Save data</dt><dd id="n-savedata">&mdash;</dd>
+      </dl>
+    </div>
+
+    <div class="card" style="grid-column: 1 / -1;">
+      <h2><span class="tag">07</span>Fonts observed</h2>
+      <p style="font-size:11px; color:var(--ink-soft); margin:0 0 8px;">Font-probing results reported by FingerprintJS. Highlighted entries were found on this system.</p>
+      <div class="fonts-list" id="fontsList">&mdash;</div>
+    </div>
+
+    <div class="card" style="grid-column: 1 / -1;">
+      <h2><span class="tag">08</span>Raw signal set</h2>
+      <p style="font-size:11px; color:var(--ink-soft); margin:0 0 8px;">The full component set returned by <b style="color:var(--stamp)">FingerprintJS</b> (open source), which powers the values above. This is the library's own output, unmodified.</p>
+      <pre id="rawComponents" style="margin:0; max-height:260px; overflow:auto; font-size:10.5px; line-height:1.5; color:var(--ink-soft); background:rgba(0,0,0,0.03); padding:10px; border:1px solid var(--line);">Loading&hellip;</pre>
+    </div>
+
+  </div>
+
+  <footer>
+    <div>
+      Case ID and canvas hash are derived locally with a simple non-cryptographic hash for display purposes only.<br>
+      Reload the page at any time &mdash; nothing here is persisted, cached, or transmitted off this device.
+    </div>
+    <div class="stamp-mark">LOCAL EVIDENCE ONLY</div>
+  </footer>
+</div>
+
+<script src="https://openfpcdn.io/fingerprintjs/v4"></script>
+<script>
+(function(){
+
+  function djb2(str){
+    let hash = 5381;
+    for (let i = 0; i < str.length; i++){
+      hash = ((hash << 5) + hash) + str.charCodeAt(i);
+      hash = hash & 0xFFFFFFFF;
+    }
+    return hash >>> 0;
+  }
+
+  function toHex(n, len){
+    return n.toString(16).padStart(len, '0').toUpperCase();
+  }
+
+  function mulberry32(seed){
+    let t = seed;
+    return function(){
+      t |= 0; t = (t + 0x6D2B79F5) | 0;
+      let r = Math.imul(t ^ (t >>> 15), 1 | t);
+      r = (r + Math.imul(r ^ (r >>> 7), 61 | r)) ^ r;
+      return ((r ^ (r >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  const set = (id, val) => { const el = document.getElementById(id); if(el) el.textContent = val; };
+  const yn = (id, bool, yesText, noText) => {
+    const el = document.getElementById(id);
+    el.innerHTML = (bool ? (yesText||'Yes') : (noText||'No')) +
+      ` <span class="flag ${bool ? 'yes':'no'}">${bool ? 'ON':'OFF'}</span>`;
+  };
+
+  // ---------- Platform ----------
+  const ua = navigator.userAgent;
+  function parseBrowser(ua){
+    const checks = [
+      [/Edg\/([\d.]+)/, 'Edge'],
+      [/OPR\/([\d.]+)/, 'Opera'],
+      [/Chrome\/([\d.]+)/, 'Chrome'],
+      [/CriOS\/([\d.]+)/, 'Chrome (iOS)'],
+      [/Firefox\/([\d.]+)/, 'Firefox'],
+      [/Version\/([\d.]+).*Safari/, 'Safari'],
+    ];
+    for (const [re, name] of checks){
+      const m = ua.match(re);
+      if (m) return `${name} ${m[1].split('.')[0]}`;
+    }
+    return 'Unknown';
+  }
+  function parseOS(ua){
+    if (/Windows NT 10/.test(ua)) return 'Windows 10/11';
+    if (/Windows NT/.test(ua)) return 'Windows';
+    if (/Mac OS X ([\d_]+)/.test(ua)) return 'macOS ' + ua.match(/Mac OS X ([\d_]+)/)[1].replace(/_/g,'.');
+    if (/Android ([\d.]+)/.test(ua)) return 'Android ' + ua.match(/Android ([\d.]+)/)[1];
+    if (/iPhone OS ([\d_]+)/.test(ua)) return 'iOS ' + ua.match(/iPhone OS ([\d_]+)/)[1].replace(/_/g,'.');
+    if (/Linux/.test(ua)) return 'Linux';
+    return 'Unknown';
+  }
+  set('p-browser', parseBrowser(ua));
+  set('p-engine', ('userAgentData' in navigator) ? 'Chromium-based (UA-CH available)' : (/Gecko\/\d+/.test(ua) ? 'Gecko' : /AppleWebKit/.test(ua) ? 'WebKit' : 'Unknown'));
+  set('p-os', parseOS(ua));
+  set('p-platform', navigator.platform || 'Unavailable');
+  set('p-langs', (navigator.languages || [navigator.language]).join(', '));
+  set('p-ua', ua);
+
+  // ---------- Display ----------
+  set('d-res', `${screen.width} × ${screen.height}`);
+  set('d-avail', `${screen.availWidth} × ${screen.availHeight}`);
+  set('d-color', `${screen.colorDepth}-bit`);
+  set('d-ratio', window.devicePixelRatio || 1);
+  set('d-orient', (screen.orientation && screen.orientation.type) || 'Unavailable');
+
+  // ---------- Environment ----------
+  const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  set('e-tz', tz || 'Unavailable');
+  const offset = -new Date().getTimezoneOffset();
+  set('e-offset', `UTC${offset >= 0 ? '+' : ''}${offset/60}`);
+  set('e-locale', Intl.DateTimeFormat().resolvedOptions().locale);
+  yn('e-cookies', navigator.cookieEnabled);
+  yn('e-dnt', navigator.doNotTrack === '1', 'Requested', 'Not set');
+  yn('e-online', navigator.onLine);
+
+  // ---------- Hardware ----------
+  set('h-cores', navigator.hardwareConcurrency || 'Unavailable');
+  set('h-mem', navigator.deviceMemory ? navigator.deviceMemory + ' GB' : 'Unavailable');
+  set('h-touch', navigator.maxTouchPoints || 0);
+  set('h-input', (navigator.maxTouchPoints > 0) ? 'Touch capable' : 'Pointer / mouse');
+
+  // ---------- Network (not covered by the fingerprinting library) ----------
+  const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  if (conn){
+    set('n-type', conn.effectiveType || 'Unavailable');
+    set('n-downlink', conn.downlink ? conn.downlink + ' Mbps' : 'Unavailable');
+    yn('n-savedata', !!conn.saveData);
+  } else {
+    set('n-type', 'Unavailable');
+    set('n-downlink', 'Unavailable');
+    set('n-savedata', 'Unavailable');
+  }
+
+  // ---------- FingerprintJS: canvas, WebGL, fonts, and the visitor ID ----------
+  function getComponent(components, name){
+    const c = components && components[name];
+    if (!c || c.error) return undefined;
+    return c.value;
+  }
+
+  function drawPrint(seedNumber){
+    const canvasEl = document.getElementById('printCanvas');
+    const pctx = canvasEl.getContext('2d');
+    const W = canvasEl.width, H = canvasEl.height, cx = W/2, cy = H/2;
+    const rand = mulberry32(seedNumber || 1);
+
+    pctx.fillStyle = '#D9DED9';
+    pctx.fillRect(0,0,W,H);
+
+    const rings = 46;
+    const freqA = 3 + Math.floor(rand()*3);
+    const freqB = 5 + Math.floor(rand()*4);
+    const phase = rand() * Math.PI * 2;
+    const wobble = 6 + rand()*10;
+
+    for (let i = 0; i < rings; i++){
+      const t = i / rings;
+      const baseR = 18 + t * (W/2 - 24);
+      pctx.beginPath();
+      for (let a = 0; a <= 360; a += 3){
+        const rad = a * Math.PI / 180;
+        const perturb = Math.sin(rad*freqA + phase + i*0.35) * wobble * (0.3+t)
+                       + Math.cos(rad*freqB - phase*0.5 + i*0.2) * (wobble*0.5) * (0.2+t);
+        const r = baseR + perturb;
+        const x = cx + Math.cos(rad) * r;
+        const y = cy + Math.sin(rad) * r;
+        if (a === 0) pctx.moveTo(x,y); else pctx.lineTo(x,y);
+      }
+      pctx.closePath();
+      pctx.strokeStyle = `rgba(162,59,46,${0.25 + (1-t)*0.5})`;
+      pctx.lineWidth = 1.1;
+      pctx.stroke();
+    }
+
+    pctx.fillStyle = '#1E2A26';
+    pctx.beginPath();
+    pctx.arc(cx, cy, 2.4, 0, Math.PI*2);
+    pctx.fill();
+  }
+
+  async function runFingerprintJS(){
+    const now = new Date();
+    set('caseTime', now.toLocaleString(undefined, { dateStyle:'medium', timeStyle:'medium' }));
+
+    if (typeof FingerprintJS === 'undefined'){
+      set('caseId', 'FP-OFFLINE');
+      set('caseConfidence', 'library unavailable');
+      set('r-canvas', 'Unavailable');
+      set('r-vendor', 'Unavailable');
+      set('r-renderer', 'Unavailable');
+      document.getElementById('fontsList').textContent = 'FingerprintJS failed to load (check network/ad-blocker).';
+      document.getElementById('rawComponents').textContent = 'FingerprintJS failed to load from openfpcdn.io.';
+      drawPrint(djb2(ua));
+      return;
+    }
+
+    try{
+      const agent = await FingerprintJS.load();
+      const result = await agent.get();
+      const components = result.components;
+
+      // Case ID + confidence come straight from the library.
+      set('caseId', 'FP-' + result.visitorId.slice(0, 10).toUpperCase());
+      set('caseConfidence', result.confidence ? Math.round(result.confidence.score * 100) + '%' : 'n/a');
+
+      // Canvas: FingerprintJS renders several probe images and returns a geometry + text signature.
+      const canvasVal = getComponent(components, 'canvas');
+      let canvasHash = 'Unavailable';
+      if (canvasVal){
+        canvasHash = toHex(djb2(JSON.stringify(canvasVal)), 8);
+      }
+      set('r-canvas', canvasHash);
+
+      // WebGL: basics + extensions reported by the library, condensed to vendor/renderer-style strings.
+      const glBasics = getComponent(components, 'webGlBasics');
+      if (glBasics && glBasics.rendererInfo){
+        set('r-vendor', glBasics.rendererInfo.vendor || 'Masked');
+        set('r-renderer', glBasics.rendererInfo.renderer || 'Masked');
+      } else if (glBasics){
+        set('r-vendor', glBasics.vendor || 'Reported (masked details)');
+        set('r-renderer', glBasics.version || 'Reported (masked details)');
+      } else {
+        set('r-vendor', 'Unavailable');
+        set('r-renderer', 'Unavailable');
+      }
+
+      // Fonts: list of font names FingerprintJS probed and found installed.
+      const fontsVal = getComponent(components, 'fonts');
+      const fontsListEl = document.getElementById('fontsList');
+      if (Array.isArray(fontsVal) && fontsVal.length){
+        fontsListEl.innerHTML = fontsVal.map(f => `<span class="detected">${f}</span>`).join('');
+      } else {
+        fontsListEl.textContent = 'No font signal reported.';
+      }
+
+      // Raw dump of everything the library returned.
+      document.getElementById('rawComponents').textContent = JSON.stringify(components, null, 2);
+
+      // Seed the illustrative print from the library's own visitor ID.
+      drawPrint(djb2(result.visitorId));
+
+    } catch(err){
+      set('caseId', 'FP-ERROR');
+      set('caseConfidence', 'error');
+      document.getElementById('rawComponents').textContent = 'FingerprintJS threw an error: ' + err.message;
+      drawPrint(djb2(ua + Date.now()));
+    }
+  }
+
+  runFingerprintJS();
+
+})();
+</script>
+
+</body>
+</html>
